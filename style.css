@@ -1,31 +1,27 @@
-/*
-  Habrio Website Stylesheet
-  
-  This stylesheet defines the visual identity for the Habrio household product review site.  
-  It makes use of CSS variables for easy colour management and provides reusable
-  components such as cards, sections and buttons. The design emphasises clean
-  layouts, generous white space and legible typography. 
-*/
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 :root {
-  /* Core brand palette */
-  --primary-color: #0a6075;      /* deep teal used for headings and highlights */
-  --secondary-color: #ff8c42;    /* warm orange accent for buttons and hover states */
-  --bg-color: #f9fbfc;          /* soft off‑white background for pages */
-  --text-color: #133b5c;        /* dark blue‑grey for body text */
-  --card-bg: #ffffff;           /* white cards */
+  --primary-color: #0a6075;
+  --secondary-color: #ff8c42;
+  --bg-color: #f9fbfc;
+  --text-color: #133b5c;
+  --card-bg: #ffffff;
   --card-shadow: rgba(0, 0, 0, 0.08);
 }
 
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
   line-height: 1.6;
 }
 
-/* Sticky header with site logo and navigation */
 header {
   background-color: #ffffff;
   display: flex;
@@ -48,7 +44,7 @@ nav a {
   margin-left: 20px;
   text-decoration: none;
   color: var(--text-color);
-  font-weight: 500;
+  font-weight: 600;
   transition: color 0.3s;
 }
 
@@ -56,22 +52,18 @@ nav a:hover {
   color: var(--primary-color);
 }
 
-/* Responsive page container */
 .container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-/* Landing page hero section */
 .hero {
-  text-align: left;
   margin-bottom: 40px;
 }
 
 .hero h1 {
-  font-size: 36px;
-  font-weight: 700;
+  font-size: 40px;
   margin-bottom: 10px;
 }
 
@@ -80,7 +72,6 @@ nav a:hover {
   color: #555;
 }
 
-/* Product cards for the homepage */
 .cards {
   display: flex;
   gap: 20px;
@@ -95,7 +86,6 @@ nav a:hover {
   flex: 1 1 calc(33.333% - 20px);
   padding: 20px;
   text-align: center;
-  position: relative;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -113,12 +103,12 @@ nav a:hover {
 }
 
 .card h3 {
-  font-size: 20px;
+  font-size: 22px;
   margin: 10px 0 5px;
 }
 
 .card p {
-  font-size: 14px;
+  font-size: 15px;
   color: #666;
   margin-bottom: 15px;
 }
@@ -130,7 +120,6 @@ nav a:hover {
   color: #ffffff;
   text-decoration: none;
   border-radius: 5px;
-  font-weight: 500;
   transition: background-color 0.3s;
 }
 
@@ -138,84 +127,40 @@ nav a:hover {
   background-color: var(--secondary-color);
 }
 
-/* Shared styles for internal pages */
-/*
-  Hero illustrations on internal pages are constrained to a fixed height to
-  prevent large vertically oriented artwork from pushing the content down
-  the page. The object-fit property ensures the image fills the area
-  while cropping gracefully.
-*/
-.hero-image {
-  width: 100%;
-  max-height: 350px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 20px;
+.category-list {
+  display: grid;
+  gap: 20px;
 }
 
-.section {
-  margin-bottom: 30px;
+.post-preview {
+  background-color: var(--card-bg);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px var(--card-shadow);
 }
 
-.section h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
-}
-
-.section h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-
-.section h3 {
+.post-preview h3 {
+  margin-top: 0;
   font-size: 22px;
-  margin-top: 20px;
+}
+
+.post-preview p {
   margin-bottom: 10px;
-}
-
-.section p {
-  margin-bottom: 15px;
-}
-
-.section ul {
-  list-style-type: disc;
-  padding-left: 20px;
-  margin-bottom: 10px;
-}
-
-.section ul li {
-  margin-bottom: 8px;
-}
-
-/* Call‑to‑action button */
-.buy-button {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: var(--secondary-color);
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: 5px;
-  transition: background-color 0.3s;
-}
-
-.buy-button:hover {
-  background-color: var(--primary-color);
-}
-
-/* Footer and footnotes */
-footer {
-  margin-top: 40px;
-  padding-top: 20px;
-  border-top: 1px solid #e0e0e0;
-  font-size: 14px;
+  font-size: 16px;
   color: #555;
 }
 
-footer p {
-  margin: 5px 0;
+.post-preview a.button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
-footer sup {
-  font-size: 12px;
+.post-preview a.button:hover {
+  background-color: var(--secondary-color);
 }

@@ -1,0 +1,74 @@
+/* Styles specific to detailed article pages */
+
+.hero-image {
+  width: 100%;
+  max-height: 350px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.section h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.section h3 {
+  font-size: 22px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  margin-bottom: 15px;
+}
+
+.section ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.section ul li {
+  margin-bottom: 8px;
+}
+
+.buy-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: var(--secondary-color);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.buy-button:hover {
+  background-color: var(--primary-color);
+}
+
+footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 14px;
+  color: #555;
+}
+
+footer p {
+  margin: 5px 0;
+}
+
+footer sup {
+  font-size: 12px;
+}
