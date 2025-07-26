@@ -219,3 +219,13 @@ footer p {
 footer sup {
   font-size: 12px;
 }
+/* Category pages */
+.category-list { display: grid; gap: 20px; }
+.post-preview { background-color: var(--card-bg); padding: 20px; border-radius: 10px; box-shadow: 0 2px 4px var(--card-shadow); }
+.post-preview h3 { margin-top: 0; font-size: 20px; }
+.post-preview p { margin-bottom: 10px; font-size: 16px; color: #555; }
+.post-preview a.button { display: inline-block; margin-top: 10px; padding: 8px 16px; background-color: var(--primary-color); color: #fff; text-decoration: none; border-radius: 4px; transition: background-color 0.3s; }
+.post-preview a.button:hover { background-color: var(--secondary-color); }
+
+
+
