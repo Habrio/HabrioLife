@@ -1,13 +1,5 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter, Poppins } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
-const poppins = Poppins({ 
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-poppins'
-});
 
 export const metadata: Metadata = {
   title: 'Habrio - Premium Products & Best Deals | Curated Shopping Experience',
@@ -61,6 +53,13 @@ export default function RootLayout({
       <head>
         <link rel="canonical" href="https://habrio.in" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {/* ✅ Load fonts via link tag */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -79,7 +78,8 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.className} ${poppins.variable} antialiased`}>
+      {/* Apply fonts with Tailwind or CSS instead of next/font */}
+      <body className="font-sans antialiased">
         {children}
       </body>
     </html>
