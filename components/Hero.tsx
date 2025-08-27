@@ -2,7 +2,13 @@
 
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
-import { ArrowRight, Star, TrendingUp, Shield } from 'lucide-react';
+import {
+  ArrowRight,
+  Star,
+  TrendingUp,
+  Shield,
+  type LucideIcon,
+} from 'lucide-react';
 
 const easingOut: [number, number, number, number] = [0.16, 1, 0.3, 1]; // ≈ easeOut
 const easingInOut: [number, number, number, number] = [0.42, 0, 0.58, 1]; // ≈ easeInOut
@@ -11,10 +17,7 @@ const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      duration: 0.6,
-      staggerChildren: 0.2,
-    },
+    transition: { duration: 0.6, staggerChildren: 0.2 },
   },
 };
 
@@ -27,10 +30,8 @@ const itemVariants: Variants = {
   },
 };
 
-type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
-
 export default function Hero(): JSX.Element {
-  const stats: { icon: IconType; value: string; label: string; color: string }[] = [
+  const stats: { icon: LucideIcon; value: string; label: string; color: string }[] = [
     { icon: Star, value: '4.9/5', label: 'Customer Rating', color: 'text-yellow-500' },
     { icon: Shield, value: '50K+', label: 'Happy Customers', color: 'text-green-500' },
     { icon: TrendingUp, value: '70%', label: 'Average Savings', color: 'text-blue-500' },
@@ -38,11 +39,11 @@ export default function Hero(): JSX.Element {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-      {/* Background Elements */}
+      {/* Background blobs */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full mix-blend-multiply filter blur-xl animate-pulse" />
-        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400/20 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000" />
-        <div className="absolute bottom-40 left-1/2 -translate-x-1/2 w-72 h-72 bg-pink-400/20 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-2000" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full mix-blend-multiply blur-xl animate-pulse" />
+        <div className="absolute top-40 right-10 w-72 h-72 bg-purple-400/20 rounded-full mix-blend-multiply blur-xl animate-pulse" />
+        <div className="absolute bottom-40 left-1/2 -translate-x-1/2 w-72 h-72 bg-pink-400/20 rounded-full mix-blend-multiply blur-xl animate-pulse" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -62,7 +63,7 @@ export default function Hero(): JSX.Element {
             </div>
           </motion.div>
 
-          {/* Main Heading */}
+          {/* Heading */}
           <motion.h1
             variants={itemVariants}
             className="mb-6 text-5xl font-bold leading-tight md:text-7xl"
@@ -88,13 +89,13 @@ export default function Hero(): JSX.Element {
             </span>
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTAs */}
           <motion.div
             variants={itemVariants}
             className="mb-16 flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
             <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(59, 130, 246, 0.3)' }}
+              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(59,130,246,0.3)' }}
               whileTap={{ scale: 0.95 }}
               className="group rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl"
             >
@@ -113,7 +114,7 @@ export default function Hero(): JSX.Element {
             </motion.button>
           </motion.div>
 
-          {/* Social Proof */}
+          {/* Social proof */}
           <motion.div
             variants={itemVariants}
             className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3"
@@ -135,7 +136,7 @@ export default function Hero(): JSX.Element {
         </motion.div>
       </div>
 
-      {/* Floating Elements */}
+      {/* Floating elements */}
       <motion.div
         animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
         transition={{ duration: 6, repeat: Infinity, repeatType: 'loop', ease: easingInOut }}
