@@ -1,143 +1,88 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Filter, Grid, List, Search } from 'lucide-react';
+import { Star, Grid, List, Search } from 'lucide-react';
 
-const products = [
-  {
-    id: 1,
-    title: 'MacBook Pro 16-inch',
-    category: 'Electronics',
-    price: 2399,
-    originalPrice: 2499,
-    rating: 4.8,
-    reviews: 1234,
-    image: 'https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=400',
-    affiliate: 'https://amazon.com/dp/example1'
-  },
-  {
-    id: 2,
-    title: 'AirPods Pro 2nd Gen',
-    category: 'Electronics',
-    price: 249,
-    originalPrice: 279,
-    rating: 4.7,
-    reviews: 8967,
-    image: 'https://images.pexels.com/photos/4050320/pexels-photo-4050320.jpeg?auto=compress&cs=tinysrgb&w=400',
-    affiliate: 'https://amazon.com/dp/example2'
-  },
-  {
-    id: 3,
-    title: 'Gaming Chair Pro',
-    category: 'Furniture',
-    price: 299,
-    originalPrice: 399,
-    rating: 4.6,
-    reviews: 567,
-    image: 'https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=400',
-    affiliate: 'https://amazon.com/dp/example3'
-  },
-  {
-    id: 4,
-    title: 'Instant Pot Duo',
-    category: 'Kitchen',
-    price: 89,
-    originalPrice: 129,
-    rating: 4.5,
-    reviews: 23456,
-    image: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=400',
-    affiliate: 'https://amazon.com/dp/example4'
-  },
-  {
-    id: 5,
-    title: 'Yoga Mat Premium',
-    category: 'Sports',
-    price: 49,
-    originalPrice: 69,
-    rating: 4.4,
-    reviews: 3421,
-    image: 'https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=400',
-    affiliate: 'https://amazon.com/dp/example5'
-  },
-  {
-    id: 6,
-    title: 'Smart LED Bulbs (4-Pack)',
-    category: 'Home',
-    price: 39,
-    originalPrice: 59,
-    rating: 4.3,
-    reviews: 1876,
-    image: 'https://images.pexels.com/photos/1112598/pexels-photo-1112598.jpeg?auto=compress&cs=tinysrgb&w=400',
-    affiliate: 'https://amazon.com/dp/example6'
-  },
+type ViewMode = 'grid' | 'list';
+type SortType = 'featured' | 'price-low' | 'price-high' | 'rating' | 'discount';
+
+interface Product {
+  id: number;
+  title: string;
+  category: string;
+  price: number;
+  originalPrice: number;
+  rating: number;
+  reviews: number;
+  image: string;
+  affiliate: string;
+}
+
+const products: Product[] = [
+  { id: 1, title: 'MacBook Pro 16-inch', category: 'Electronics', price: 2399, originalPrice: 2499, rating: 4.8, reviews: 1234, image: 'https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?auto=compress&cs=tinysrgb&w=400', affiliate: 'https://amazon.com/dp/example1' },
+  { id: 2, title: 'AirPods Pro 2nd Gen', category: 'Electronics', price: 249, originalPrice: 279, rating: 4.7, reviews: 8967, image: 'https://images.pexels.com/photos/4050320/pexels-photo-4050320.jpeg?auto=compress&cs=tinysrgb&w=400', affiliate: 'https://amazon.com/dp/example2' },
+  { id: 3, title: 'Gaming Chair Pro', category: 'Furniture', price: 299, originalPrice: 399, rating: 4.6, reviews: 567, image: 'https://images.pexels.com/photos/4050315/pexels-photo-4050315.jpeg?auto=compress&cs=tinysrgb&w=400', affiliate: 'https://amazon.com/dp/example3' },
+  { id: 4, title: 'Instant Pot Duo', category: 'Kitchen', price: 89, originalPrice: 129, rating: 4.5, reviews: 23456, image: 'https://images.pexels.com/photos/4226796/pexels-photo-4226796.jpeg?auto=compress&cs=tinysrgb&w=400', affiliate: 'https://amazon.com/dp/example4' },
+  { id: 5, title: 'Yoga Mat Premium', category: 'Sports', price: 49, originalPrice: 69, rating: 4.4, reviews: 3421, image: 'https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=400', affiliate: 'https://amazon.com/dp/example5' },
+  { id: 6, title: 'Smart LED Bulbs (4-Pack)', category: 'Home', price: 39, originalPrice: 59, rating: 4.3, reviews: 1876, image: 'https://images.pexels.com/photos/1112598/pexels-photo-1112598.jpeg?auto=compress&cs=tinysrgb&w=400', affiliate: 'https://amazon.com/dp/example6' },
 ];
 
-export default function ProductGrid() {
-  const [filteredProducts, setFilteredProducts] = useState(products);
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [sortBy, setSortBy] = useState('featured');
-  const [viewMode, setViewMode] = useState('grid');
-  const [searchQuery, setSearchQuery] = useState('');
+export default function ProductGrid(): JSX.Element {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [sortBy, setSortBy] = useState<SortType>('featured');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const categories = ['All', ...new Set(products.map(p => p.category))];
+  // ✅ Convert Set → Array first (avoids TS downlevel iteration error)
+  const categories = useMemo<string[]>(
+    () => ['All', ...Array.from(new Set(products.map((p) => p.category).filter(Boolean)))],
+    []
+  );
 
-  const handleCategoryFilter = (category: string) => {
-    setSelectedCategory(category);
-    filterProducts(category, sortBy, searchQuery);
-  };
+  // ✅ Derive filtered + sorted products from state (no mutations of source array)
+  const filteredProducts = useMemo<Product[]>(() => {
+    const q = searchQuery.trim().toLowerCase();
 
-  const handleSort = (sortType: string) => {
-    setSortBy(sortType);
-    filterProducts(selectedCategory, sortType, searchQuery);
-  };
+    let list = products.slice(); // copy
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    filterProducts(selectedCategory, sortBy, query);
-  };
-
-  const filterProducts = (category: string, sort: string, search: string) => {
-    let filtered = products;
-
-    // Filter by category
-    if (category !== 'All') {
-      filtered = filtered.filter(p => p.category === category);
+    if (selectedCategory !== 'All') {
+      list = list.filter((p) => p.category === selectedCategory);
     }
 
-    // Filter by search
-    if (search) {
-      filtered = filtered.filter(p => 
-        p.title.toLowerCase().includes(search.toLowerCase()) ||
-        p.category.toLowerCase().includes(search.toLowerCase())
+    if (q) {
+      list = list.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q)
       );
     }
 
-    // Sort products
-    switch (sort) {
+    switch (sortBy) {
       case 'price-low':
-        filtered = filtered.sort((a, b) => a.price - b.price);
+        list.sort((a, b) => a.price - b.price);
         break;
       case 'price-high':
-        filtered = filtered.sort((a, b) => b.price - a.price);
+        list.sort((a, b) => b.price - a.price);
         break;
       case 'rating':
-        filtered = filtered.sort((a, b) => b.rating - a.rating);
+        list.sort((a, b) => b.rating - a.rating);
         break;
       case 'discount':
-        filtered = filtered.sort((a, b) => {
-          const discountA = ((a.originalPrice - a.price) / a.originalPrice) * 100;
-          const discountB = ((b.originalPrice - b.price) / b.originalPrice) * 100;
-          return discountB - discountA;
+        list.sort((a, b) => {
+          const dA = ((a.originalPrice - a.price) / a.originalPrice) * 100;
+          const dB = ((b.originalPrice - b.price) / b.originalPrice) * 100;
+          return dB - dA;
         });
         break;
+      case 'featured':
       default:
-        // Keep original order for 'featured'
+        // keep original order
         break;
     }
 
-    setFilteredProducts([...filtered]);
-  };
+    return list;
+  }, [selectedCategory, sortBy, searchQuery]);
 
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -161,12 +106,12 @@ export default function ProductGrid() {
       <div className="mb-8 space-y-4">
         {/* Search Bar */}
         <div className="relative max-w-md mx-auto">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
           <input
             type="text"
             placeholder="Search products..."
             value={searchQuery}
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
           />
         </div>
@@ -180,7 +125,7 @@ export default function ProductGrid() {
                 key={category}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => handleCategoryFilter(category)}
+                onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                   selectedCategory === category
                     ? 'bg-blue-600 text-white shadow-lg'
@@ -196,7 +141,7 @@ export default function ProductGrid() {
           <div className="flex items-center gap-4">
             <select
               value={sortBy}
-              onChange={(e) => handleSort(e.target.value)}
+              onChange={(e) => setSortBy(e.target.value as SortType)}
               className="px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="featured">Featured</option>
@@ -214,6 +159,7 @@ export default function ProductGrid() {
                     ? 'bg-blue-600 text-white'
                     : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300'
                 }`}
+                aria-label="Grid view"
               >
                 <Grid className="w-5 h-5" />
               </button>
@@ -224,6 +170,7 @@ export default function ProductGrid() {
                     ? 'bg-blue-600 text-white'
                     : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300'
                 }`}
+                aria-label="List view"
               >
                 <List className="w-5 h-5" />
               </button>
@@ -235,7 +182,7 @@ export default function ProductGrid() {
       {/* Product Grid */}
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${selectedCategory}-${sortBy}-${searchQuery}`}
+          key={`${selectedCategory}-${sortBy}-${searchQuery}-${viewMode}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -281,7 +228,7 @@ export default function ProductGrid() {
                 {/* Rating */}
                 <div className="flex items-center space-x-2 mb-3">
                   <div className="flex items-center">
-                    {[...Array(5)].map((_, i) => (
+                    {Array.from({ length: 5 }).map((_, i) => (
                       <Star
                         key={i}
                         className={`w-4 h-4 ${
@@ -318,9 +265,7 @@ export default function ProductGrid() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={`${
-                    viewMode === 'list'
-                      ? 'inline-block px-6 py-2'
-                      : 'block w-full py-3'
+                    viewMode === 'list' ? 'inline-block px-6 py-2' : 'block w-full py-3'
                   } bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center rounded-xl font-semibold hover:shadow-lg transition-all duration-300`}
                 >
                   Buy Now
@@ -333,11 +278,7 @@ export default function ProductGrid() {
 
       {/* No Results */}
       {filteredProducts.length === 0 && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="text-center py-12"
-        >
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-12 text-center">
           <p className="text-xl text-slate-600 dark:text-slate-400">
             No products found matching your criteria.
           </p>
