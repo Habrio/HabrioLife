@@ -5,12 +5,14 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Menu, X, Sun, Moon, ShoppingBag } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import { useRouter } from 'next/navigation';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { theme, toggleTheme } = useTheme();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,7 +93,15 @@ export default function Navigation() {
 
             {/* Search Bar */}
             <div className="hidden md:block">
-              <div className="relative">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!searchQuery.trim()) return;
+                  router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+                  setSearchQuery('');
+                }}
+                className="relative"
+              >
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
@@ -100,7 +110,7 @@ export default function Navigation() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-64 pl-10 pr-4 py-2 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 />
-              </div>
+              </form>
             </div>
 
             {/* Theme Toggle & Mobile Menu */}
@@ -136,14 +146,25 @@ export default function Navigation() {
             className="fixed top-16 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 md:hidden"
           >
             <div className="px-4 py-6 space-y-4">
-              <div className="relative mb-4">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!searchQuery.trim()) return;
+                  router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+                  setIsMobileMenuOpen(false);
+                  setSearchQuery('');
+                }}
+                className="relative mb-4"
+              >
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-              </div>
+              </form>
               {[
                 { label: 'Home', href: '/' },
                 { label: 'Categories', href: '/categories' },
