@@ -324,4 +324,4 @@ export const guides = [
   }
 ];
 
-export { categories, guides };
+// Note: categories and guides are already exported above.
