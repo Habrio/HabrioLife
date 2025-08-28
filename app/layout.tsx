@@ -2,13 +2,13 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Habrio - Premium Products & Best Deals | Curated Shopping Experience',
-  description: 'Discover the best deals on premium products. Curated selection from top brands with exclusive discounts. Shop smart, save more.',
-  keywords: 'deals, discounts, premium products, shopping, best prices, affiliate',
+  title: 'Habrio - Smart Buying Guides & Product Recommendations',
+  description: 'Learn how to choose the best products with in-depth buying guides and curated recommendations. Shop smarter with Habrio.',
+  keywords: 'buying guide, product recommendations, how to buy, shopping tips',
   authors: [{ name: 'Habrio' }],
   openGraph: {
-    title: 'Habrio - Premium Products & Best Deals',
-    description: 'Discover the best deals on premium products. Curated selection from top brands.',
+    title: 'Habrio - Smart Buying Guides & Picks',
+    description: 'In-depth buying guides and curated product recommendations.',
     url: 'https://habrio.in',
     siteName: 'Habrio',
     type: 'website',
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Habrio - Premium Products & Best Deals',
-    description: 'Discover the best deals on premium products.',
+    title: 'Habrio - Smart Buying Guides & Picks',
+    description: 'In-depth buying guides and curated product recommendations.',
     images: ['https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=1200&h=630&fit=crop']
   },
   robots: {
@@ -68,7 +68,7 @@ export default function RootLayout({
               "@type": "WebSite",
               "name": "Habrio",
               "url": "https://habrio.in",
-              "description": "Premium products and best deals curated for smart shoppers",
+              "description": "In-depth buying guides and curated recommendations for smart shoppers",
               "potentialAction": {
                 "@type": "SearchAction",
                 "target": "https://habrio.in/search?q={search_term_string}",

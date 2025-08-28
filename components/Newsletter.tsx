@@ -37,7 +37,7 @@ export default function Newsletter() {
             Welcome to Habrio! 🎉
           </h3>
           <p className="text-slate-600 dark:text-slate-400">
-            You&apos;re all set! We&apos;ll keep you updated with the best deals and exclusive offers.
+            You&apos;re all set! We&apos;ll keep you updated with the latest guides and recommendations.
           </p>
         </motion.div>
       </section>
@@ -64,12 +64,11 @@ export default function Newsletter() {
         </motion.div>
 
         <h3 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-          Never Miss a Deal
+          Never Miss an Update
         </h3>
         
         <p className="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto">
-          Subscribe to our newsletter and get notified about exclusive deals, 
-          new arrivals, and special discounts before anyone else.
+          Subscribe to our newsletter and be the first to know about new buying guides, product recommendations, and special updates.
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-md mx-auto">
@@ -114,7 +113,7 @@ export default function Newsletter() {
           </div>
           <div className="flex items-center">
             <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div>
-            Exclusive deals
+            Expert tips
           </div>
         </div>
       </motion.div>

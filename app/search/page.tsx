@@ -1,11 +1,10 @@
-'use client';
-
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { guides, categories } from '@/lib/data';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { ArrowRight } from 'lucide-react';
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -42,21 +41,23 @@ export default function SearchPage() {
             )}
 
             {results.length > 0 && (
-              <div className="divide-y divide-slate-200 dark:divide-slate-700 rounded-lg overflow-hidden bg-white/60 dark:bg-slate-800/60 backdrop-blur">
+              <div className="rounded-lg overflow-hidden bg-white/60 dark:bg-slate-800/60 backdrop-blur">
                 {results.map((g) => (
-                  <div key={`${g.category}-${g.slug}`} className="p-4">
+                  <div
+                    key={`${g.category}-${g.slug}`}
+                    className="group p-4 border-b last:border-b-0 border-slate-200 dark:border-slate-700 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/50"
+                  >
                     <Link
                       href={`/categories/${g.category}/${g.slug}`}
-                      className="text-xl font-semibold text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                      className="text-xl font-semibold text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline"
                     >
                       {g.title}
+                      <ArrowRight className="inline-block w-4 h-4 ml-1 align-middle transition-transform duration-200 group-hover:translate-x-1" />
                     </Link>
                     {g.excerpt && (
                       <p className="text-slate-700 dark:text-slate-300 text-sm mt-1">{g.excerpt}</p>
                     )}
-                    <span className="text-xs text-slate-500 dark:text-slate-400">
-                      Category: {categoryName(g.category)}
-                    </span>
+                    <span className="text-xs text-slate-500 dark:text-slate-400">Category: {categoryName(g.category)}</span>
                   </div>
                 ))}
               </div>
@@ -68,4 +69,4 @@ export default function SearchPage() {
     </ThemeProvider>
   );
 }
-
+"use client";

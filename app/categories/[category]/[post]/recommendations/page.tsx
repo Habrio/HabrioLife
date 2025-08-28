@@ -1,11 +1,10 @@
-'use client';
-
 import Link from 'next/link';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { guides, categories } from '@/lib/data';
 import { Star } from 'lucide-react';
+import { notFound } from 'next/navigation';
 
 interface RecPageProps {
   params: { category: string; post: string };
@@ -15,6 +14,9 @@ export default function RecommendationsPage({ params }: RecPageProps) {
   const { category: categorySlug, post: postSlug } = params;
   const guide = guides.find((g) => g.slug === postSlug && g.category === categorySlug);
   const category = categories.find((c) => c.slug === categorySlug);
+  if (!guide) {
+    notFound();
+  }
 
   const recs = (guide as any)?.recommendations as
     | { [k: string]: Array<{ title: string; price: string; rating: number; image?: string; affiliate?: string }> }
@@ -113,4 +115,8 @@ function RecSection({
       )}
     </section>
   );
+}
+
+export async function generateStaticParams() {
+  return guides.map((g) => ({ category: g.category, post: g.slug }));
 }
