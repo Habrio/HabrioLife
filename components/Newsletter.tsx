@@ -37,7 +37,7 @@ export default function Newsletter() {
             Welcome to Habrio! 🎉
           </h3>
           <p className="text-slate-600 dark:text-slate-400">
-            You're all set! We'll keep you updated with the best deals and exclusive offers.
+            You&apos;re all set! We&apos;ll keep you updated with the best deals and exclusive offers.
           </p>
         </motion.div>
       </section>

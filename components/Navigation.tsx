@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Menu, X, Sun, Moon, ShoppingBag } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
@@ -72,15 +73,19 @@ export default function Navigation() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              {['Home', 'Deals', 'Categories', 'Blog', 'About'].map((item) => (
-                <motion.a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  whileHover={{ y: -2 }}
-                  className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium"
-                >
-                  {item}
-                </motion.a>
+              {[
+                { label: 'Home', href: '/' },
+                { label: 'Categories', href: '/categories' },
+                { label: 'About', href: '/about' },
+              ].map((item) => (
+                <motion.div key={item.label} whileHover={{ y: -2 }}>
+                  <Link
+                    href={item.href}
+                    className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
               ))}
             </div>
 
@@ -139,15 +144,19 @@ export default function Navigation() {
                   className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              {['Home', 'Deals', 'Categories', 'Blog', 'About'].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
+              {[
+                { label: 'Home', href: '/' },
+                { label: 'Categories', href: '/categories' },
+                { label: 'About', href: '/about' },
+              ].map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
                   className="block text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {item}
-                </a>
+                  {item.label}
+                </Link>
               ))}
             </div>
           </motion.div>
