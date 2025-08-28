@@ -9,20 +9,18 @@ export default function Footer() {
       title: 'Quick Links',
       links: [
         { label: 'Home', href: '/' },
-        { label: 'Deals', href: '/deals' },
         { label: 'Categories', href: '/categories' },
-        { label: 'Blog', href: '/blog' },
         { label: 'About', href: '/about' },
       ]
     },
     {
       title: 'Categories',
       links: [
-        { label: 'Electronics', href: '/electronics' },
-        { label: 'Fashion', href: '/fashion' },
-        { label: 'Home & Garden', href: '/home' },
-        { label: 'Sports', href: '/sports' },
-        { label: 'Books', href: '/books' },
+        { label: 'Electronics', href: '/categories/electronics' },
+        { label: 'Fashion', href: '/categories/fashion' },
+        { label: 'Home & Garden', href: '/categories/home-garden' },
+        { label: 'Sports', href: '/categories/sports' },
+        { label: 'Books', href: '/categories/books' },
       ]
     },
     {
@@ -152,9 +150,9 @@ export default function Footer() {
         {/* Affiliate Disclosure */}
         <div className="mt-8 p-4 bg-slate-800/50 rounded-lg">
           <p className="text-slate-400 text-sm text-center leading-relaxed">
-            <strong>Affiliate Disclosure:</strong> Habrio may earn a commission from purchases made through our affiliate links. 
-            This doesn't affect the price you pay or our product recommendations. We only promote products we believe in.
-          </p>
+              <strong>Affiliate Disclosure:</strong> Habrio may earn a commission from purchases made through our affiliate links.
+              This doesn&apos;t affect the price you pay or our product recommendations. We only promote products we believe in.
+            </p>
         </div>
       </div>
     </footer>

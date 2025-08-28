@@ -1,12 +1,13 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { motion, Variants } from 'framer-motion';
 import {
   ArrowRight,
   Star,
-  TrendingUp,
-  Shield,
+  Users,
+  BookOpen,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -32,9 +33,9 @@ const itemVariants: Variants = {
 
 export default function Hero(): JSX.Element {
   const stats: { icon: LucideIcon; value: string; label: string; color: string }[] = [
-    { icon: Star, value: '4.9/5', label: 'Customer Rating', color: 'text-yellow-500' },
-    { icon: Shield, value: '50K+', label: 'Happy Customers', color: 'text-green-500' },
-    { icon: TrendingUp, value: '70%', label: 'Average Savings', color: 'text-blue-500' },
+    { icon: Star, value: '4.9/5', label: 'User Rating', color: 'text-yellow-500' },
+    { icon: Users, value: '50K+', label: 'Happy Readers', color: 'text-green-500' },
+    { icon: BookOpen, value: '20+', label: 'Buying Guides', color: 'text-blue-500' },
   ];
 
   return (
@@ -56,9 +57,9 @@ export default function Hero(): JSX.Element {
           {/* Badge */}
           <motion.div variants={itemVariants} className="mb-8">
             <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full border border-blue-200 dark:border-blue-800">
-              <TrendingUp className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <BookOpen className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-400" />
               <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
-                🔥 Premium Deals Live Now
+                🔥 New Buying Guides Available
               </span>
             </div>
           </motion.div>
@@ -69,11 +70,11 @@ export default function Hero(): JSX.Element {
             className="mb-6 text-5xl font-bold leading-tight md:text-7xl"
           >
             <span className="bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-transparent dark:from-white dark:via-blue-200 dark:to-white">
-              Discover Premium
+              Discover How to Buy
             </span>
             <br />
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-              Products & Deals
+              the Best Products
             </span>
           </motion.h1>
 
@@ -82,10 +83,10 @@ export default function Hero(): JSX.Element {
             variants={itemVariants}
             className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed text-slate-600 dark:text-slate-300 md:text-2xl"
           >
-            Curated selection of the best products from top brands.
+            Expert tips and step-by-step guides to help you make smart purchasing decisions.
             <br className="hidden md:block" />
             <span className="font-semibold text-slate-700 dark:text-slate-200">
-              Save up to 70% with exclusive deals
+              Shop smarter, buy with confidence.
             </span>
           </motion.p>
 
@@ -99,10 +100,10 @@ export default function Hero(): JSX.Element {
               whileTap={{ scale: 0.95 }}
               className="group rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl"
             >
-              <span className="flex items-center">
-                Browse All Deals
+              <Link href="/categories" className="flex items-center">
+                Browse Guides
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
-              </span>
+              </Link>
             </motion.button>
 
             <motion.button
@@ -110,7 +111,7 @@ export default function Hero(): JSX.Element {
               whileTap={{ scale: 0.95 }}
               className="rounded-2xl border border-slate-200 bg-white/10 px-8 py-4 text-lg font-semibold text-slate-700 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 dark:border-slate-700 dark:bg-slate-800/20 dark:text-slate-300 dark:hover:bg-slate-800/30"
             >
-              How It Works
+              <Link href="/about">How It Works</Link>
             </motion.button>
           </motion.div>
 
