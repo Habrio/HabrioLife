@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { hover, spring, item } from '@/lib/motion';
+import { hover, spring, item } from '@/src/lib/motion';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
@@ -67,4 +67,3 @@ const ProductCard = ({ title, price, href, image, ctaLabel = 'View', variant, si
 };
 
 export default ProductCard;
-

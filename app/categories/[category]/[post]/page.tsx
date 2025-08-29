@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import { categories, guides } from '@/lib/data';
 import QandA from './QandA';
 import { notFound } from 'next/navigation';
+import Section from '@/src/components/kit/Section';
 
 interface GuidePageProps {
   params: { category: string; post: string };
@@ -23,7 +24,7 @@ export default function GuidePage({ params }: GuidePageProps) {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
         <Navigation />
         <main>
-          <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+          <Section className="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white">{guide.title}</h1>
             {category?.name && (
               <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Category: {category.name}</p>
@@ -98,7 +99,7 @@ export default function GuidePage({ params }: GuidePageProps) {
 
             {/* Q&A Section */}
             <QandA categorySlug={categorySlug} postSlug={postSlug} />
-          </section>
+          </Section>
         </main>
         <Footer />
       </div>

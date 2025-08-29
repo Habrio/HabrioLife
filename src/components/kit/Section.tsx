@@ -1,7 +1,7 @@
 "use client";
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { container } from '@/lib/motion';
+import { container } from '@/src/lib/motion';
 import { PropsWithChildren } from 'react';
 
 type SectionProps = PropsWithChildren<{
@@ -24,4 +24,3 @@ const Section = ({ children, className, id }: SectionProps) => {
 };
 
 export default Section;
-

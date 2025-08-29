@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { item } from '@/lib/motion';
+import { item } from '@/src/lib/motion';
 import { LucideIcon, Search } from 'lucide-react';
 
 type EmptyStateProps = {
@@ -46,4 +46,3 @@ const EmptyState = ({
 };
 
 export default EmptyState;
-

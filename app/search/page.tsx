@@ -6,7 +6,11 @@ import { guides, categories } from '@/lib/data';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Search } from 'lucide-react';
+import Section from '@/src/components/kit/Section';
+import PageHeader from '@/src/components/kit/PageHeader';
+import EmptyState from '@/src/components/kit/EmptyState';
+import { Card } from '@/components/ui/card';
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
@@ -28,43 +32,35 @@ export default function SearchPage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
         <Navigation />
         <main>
-          <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
-            <h1 className="text-3xl font-bold mb-2 text-slate-900 dark:text-white">Search Results</h1>
-            {q ? (
-              <p className="mb-6 text-slate-600 dark:text-slate-400">
-                Results for "<span className="font-semibold">{q}</span>"
-              </p>
+          <Section className="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+            <PageHeader
+              title="Search Results"
+              description={q ? `Results for "${q}"` : 'Please enter a search term.'}
+              className="mb-4"
+            />
+
+            {!q ? (
+              <EmptyState title="Start typing to search" description="Try a product or category keyword." icon={Search} />
+            ) : results.length === 0 ? (
+              <EmptyState title={`No guides found for "${q}"`} description="Try a different keyword or check categories." />
             ) : (
-              <p className="mb-6 text-slate-600 dark:text-slate-400">Please enter a search term.</p>
-            )}
-
-            {q && results.length === 0 && (
-              <p className="text-slate-500 dark:text-slate-400">No guides found for "{q}".</p>
-            )}
-
-            {results.length > 0 && (
-              <div className="rounded-lg overflow-hidden bg-white/60 dark:bg-slate-800/60 backdrop-blur">
+              <Card className="divide-y divide-slate-200/80 dark:divide-slate-700/80 bg-white/70 dark:bg-slate-800/70 backdrop-blur rounded-2xl">
                 {results.map((g) => (
-                  <div
-                    key={`${g.category}-${g.slug}`}
-                    className="group p-4 border-b last:border-b-0 border-slate-200 dark:border-slate-700 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/50"
-                  >
+                  <div key={`${g.category}-${g.slug}`} className="group p-4 transition-colors hover:bg-slate-50/60 dark:hover:bg-slate-800/40 rounded-2xl">
                     <Link
                       href={`/categories/${g.category}/${g.slug}`}
-                      className="text-xl font-semibold text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline"
+                      className="text-lg font-semibold text-slate-800 hover:text-saffron-700 dark:text-slate-100 dark:hover:text-saffron-400"
                     >
                       {g.title}
                       <ArrowRight className="inline-block w-4 h-4 ml-1 align-middle transition-transform duration-200 group-hover:translate-x-1" />
                     </Link>
-                    {g.excerpt && (
-                      <p className="text-slate-700 dark:text-slate-300 text-sm mt-1">{g.excerpt}</p>
-                    )}
+                    {g.excerpt && <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{g.excerpt}</p>}
                     <span className="text-xs text-slate-500 dark:text-slate-400">Category: {categoryName(g.category)}</span>
                   </div>
                 ))}
-              </div>
+              </Card>
             )}
-          </section>
+          </Section>
         </main>
         <Footer />
       </div>

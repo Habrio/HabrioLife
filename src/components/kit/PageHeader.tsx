@@ -1,7 +1,7 @@
 "use client";
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import { item } from '@/lib/motion';
+import { item } from '@/src/lib/motion';
 import { ReactNode } from 'react';
 
 type PageHeaderProps = {
@@ -32,4 +32,3 @@ const PageHeader = ({ title, description, actions, className }: PageHeaderProps)
 };
 
 export default PageHeader;
-
