@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('http://localhost:3000'),
   title: 'Habrio - Smart Buying Guides & Product Recommendations',
   description: 'Learn how to choose the best products with in-depth buying guides and curated recommendations. Shop smarter with Habrio.',
   keywords: 'buying guide, product recommendations, how to buy, shopping tips',

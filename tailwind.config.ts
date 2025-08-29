@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { colors as brandColors, radii as brandRadii } from './src/styles/design-tokens';
 
 const config: Config = {
   darkMode: ['class'],
@@ -6,9 +7,29 @@ const config: Config = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: '1rem',
+    },
     extend: {
+      fontFamily: {
+        // Prefer system UI + Inter; can be wired to CSS var if needed
+        sans: [
+          'Inter',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica',
+          'Arial',
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+        ],
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -18,8 +39,18 @@ const config: Config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        '2xl': brandRadii['2xl'],
       },
       colors: {
+        // Brand palettes (saffron/orange + green)
+        saffron: brandColors.saffron,
+        brand: {
+          primary: brandColors.saffron[500],
+          primaryDark: brandColors.saffron[600],
+          secondary: brandColors.green[500],
+          secondaryDark: brandColors.green[600],
+        },
+        green: brandColors.green,
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -85,6 +116,11 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp'),
+  ],
 };
 export default config;
