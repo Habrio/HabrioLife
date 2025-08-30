@@ -11,11 +11,11 @@ import ProductCard from '@/src/components/kit/ProductCard';
 import Rating from '@/src/components/kit/Rating';
 
 interface RecPageProps {
-  params: { category: string; post: string };
+  params: Promise<{ category: string; post: string }>;
 }
 
-export default function RecommendationsPage({ params }: RecPageProps) {
-  const { category: categorySlug, post: postSlug } = params;
+export default async function RecommendationsPage({ params }: RecPageProps) {
+  const { category: categorySlug, post: postSlug } = await params;
   const guide = guides.find((g) => g.slug === postSlug && g.category === categorySlug);
   const category = categories.find((c) => c.slug === categorySlug);
   if (!guide) {

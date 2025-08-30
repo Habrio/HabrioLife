@@ -5,11 +5,9 @@ import Link from 'next/link';
 import { motion, Variants } from 'framer-motion';
 import {
   ArrowRight,
-  Star,
-  Users,
-  BookOpen,
   type LucideIcon,
 } from 'lucide-react';
+import SearchBox from '@/components/SearchBox';
 
 const easingOut: [number, number, number, number] = [0.16, 1, 0.3, 1]; // ≈ easeOut
 const easingInOut: [number, number, number, number] = [0.42, 0, 0.58, 1]; // ≈ easeInOut
@@ -32,14 +30,9 @@ const itemVariants: Variants = {
 };
 
 export default function Hero(): JSX.Element {
-  const stats: { icon: LucideIcon; value: string; label: string; color: string }[] = [
-    { icon: Star, value: '4.9/5', label: 'User Rating', color: 'text-yellow-500' },
-    { icon: Users, value: '50K+', label: 'Happy Readers', color: 'text-green-500' },
-    { icon: BookOpen, value: '20+', label: 'Buying Guides', color: 'text-blue-500' },
-  ];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-[78vh] flex items-center justify-center overflow-hidden pt-16">
       {/* Background blobs */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full mix-blend-multiply blur-xl animate-pulse" />
@@ -54,14 +47,9 @@ export default function Hero(): JSX.Element {
           animate="visible"
           className="text-center"
         >
-          {/* Badge */}
+          {/* Central Search */}
           <motion.div variants={itemVariants} className="mb-8">
-            <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full border border-blue-200 dark:border-blue-800">
-              <BookOpen className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-400" />
-              <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
-                🔥 New Buying Guides Available
-              </span>
-            </div>
+            <SearchBox />
           </motion.div>
 
           {/* Heading */}
@@ -90,50 +78,7 @@ export default function Hero(): JSX.Element {
             </span>
           </motion.p>
 
-          {/* CTAs */}
-          <motion.div
-            variants={itemVariants}
-            className="mb-16 flex flex-col items-center justify-center gap-4 sm:flex-row"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(59,130,246,0.3)' }}
-              whileTap={{ scale: 0.95 }}
-              className="group rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:shadow-xl"
-            >
-              <Link href="/categories" className="flex items-center">
-                Browse Guides
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
-              </Link>
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="rounded-2xl border border-slate-200 bg-white/10 px-8 py-4 text-lg font-semibold text-slate-700 backdrop-blur-sm transition-all duration-300 hover:bg-white/20 dark:border-slate-700 dark:bg-slate-800/20 dark:text-slate-300 dark:hover:bg-slate-800/30"
-            >
-              <Link href="/about">How It Works</Link>
-            </motion.button>
-          </motion.div>
-
-          {/* Social proof */}
-          <motion.div
-            variants={itemVariants}
-            className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3"
-          >
-            {stats.map(({ icon: Icon, value, label, color }, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ y: -5 }}
-                className="rounded-2xl border border-slate-200/20 bg-white/5 p-6 text-center backdrop-blur-sm dark:border-slate-700/20 dark:bg-slate-800/20"
-              >
-                <Icon className={`mx-auto mb-3 h-8 w-8 ${color}`} />
-                <div className="mb-1 text-2xl font-bold text-slate-900 dark:text-white">
-                  {value}
-                </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">{label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+          {/* Primary CTAs removed; search is the central action */}
         </motion.div>
       </div>
 

@@ -1,21 +1,19 @@
-import Link from 'next/link';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import Newsletter from '@/components/Newsletter';
 import { categories, guides } from '@/lib/data';
-import { ArrowRight } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import { Card } from '@/components/ui/card';
 import PageHeader from '@/src/components/kit/PageHeader';
 import Section from '@/src/components/kit/Section';
+import GuideGrid from '@/components/GuideGrid';
 
 interface CategoryPageProps {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const categorySlug = params.category;
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { category: categorySlug } = await params;
   const category = categories.find((cat) => cat.slug === categorySlug);
   if (!category) {
     notFound();
@@ -37,22 +35,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 No guides available in this category yet. Please check back soon!
               </p>
             ) : (
-              <Card className="divide-y divide-slate-200/80 dark:divide-slate-700/80 bg-white/70 dark:bg-slate-800/70 backdrop-blur rounded-2xl">
-                {guidesForCategory.map((guide) => (
-                  <div key={guide.slug} className="group p-4 transition-colors hover:bg-slate-50/60 dark:hover:bg-slate-800/40 rounded-2xl">
-                    <Link
-                      href={`/categories/${categorySlug}/${guide.slug}`}
-                      className="text-lg font-semibold text-slate-800 hover:text-saffron-700 dark:text-slate-100 dark:hover:text-saffron-400"
-                    >
-                      {guide.title}
-                      <ArrowRight className="inline-block w-4 h-4 ml-1 align-middle transition-transform duration-200 group-hover:translate-x-1" />
-                    </Link>
-                    {guide.excerpt && (
-                      <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">{guide.excerpt}</p>
-                    )}
-                  </div>
-                ))}
-              </Card>
+              <GuideGrid guides={guidesForCategory as any} categorySlug={categorySlug} />
             )}
           </Section>
           <Newsletter />

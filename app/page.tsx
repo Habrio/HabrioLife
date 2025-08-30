@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import CategoryGrid from '@/components/CategoryGrid';
+import PostsPreview from '@/components/PostsPreview';
 
 export default function Home() {
   return (
@@ -15,13 +16,13 @@ export default function Home() {
         <Navigation />
         <main>
           <Hero />
-          <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="text-center mb-12"
+              className="text-center mb-8"
             >
               <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent dark:from-white dark:to-slate-300">
                 Browse Categories
@@ -31,6 +32,9 @@ export default function Home() {
               </p>
             </motion.div>
             <CategoryGrid />
+          </section>
+          <section className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <PostsPreview />
           </section>
           <Newsletter />
         </main>

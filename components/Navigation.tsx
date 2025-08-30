@@ -3,16 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Menu, X, Sun, Moon, ShoppingBag } from 'lucide-react';
+import { Menu, X, Sun, Moon, ShoppingBag } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
-import { useRouter } from 'next/navigation';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const { theme, toggleTheme } = useTheme();
-  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,58 +57,25 @@ export default function Navigation() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center space-x-3"
-            >
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <ShoppingBag className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Habrio
-              </span>
-            </motion.div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {[
-                { label: 'Home', href: '/' },
-                { label: 'Categories', href: '/categories' },
-                { label: 'About', href: '/about' },
-              ].map((item) => (
-                <motion.div key={item.label} whileHover={{ y: -2 }}>
-                  <Link
-                    href={item.href}
-                    className="text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium"
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Search Bar */}
-            <div className="hidden md:block">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (!searchQuery.trim()) return;
-                  router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
-                  setSearchQuery('');
-                }}
-                className="relative"
+            <Link href="/" aria-label="Go to home">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center space-x-3"
               >
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-64 pl-10 pr-4 py-2 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                />
-              </form>
-            </div>
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                  <ShoppingBag className="w-5 h-5 text-white" />
+                </div>
+                <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Habrio
+                </span>
+              </motion.div>
+            </Link>
+
+            {/* Desktop Navigation – simplified: no nav links, logo goes home */}
+            <div className="hidden md:flex items-center space-x-8" />
+
+            {/* Search removed from header; central search lives in Hero */}
 
             {/* Theme Toggle & Mobile Menu */}
             <div className="flex items-center space-x-4">
@@ -135,7 +99,7 @@ export default function Navigation() {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (links removed) */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -145,40 +109,8 @@ export default function Navigation() {
             transition={{ duration: 0.2 }}
             className="fixed top-16 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-b border-slate-200 dark:border-slate-700 md:hidden"
           >
-            <div className="px-4 py-6 space-y-4">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (!searchQuery.trim()) return;
-                  router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
-                  setIsMobileMenuOpen(false);
-                  setSearchQuery('');
-                }}
-                className="relative mb-4"
-              >
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </form>
-              {[
-                { label: 'Home', href: '/' },
-                { label: 'Categories', href: '/categories' },
-                { label: 'About', href: '/about' },
-              ].map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="block text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 font-medium py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
+            <div className="px-4 py-6 space-y-2 text-slate-600 dark:text-slate-300">
+              <p>No navigation links. Tap the logo to return home.</p>
             </div>
           </motion.div>
         )}
