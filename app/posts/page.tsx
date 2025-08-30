@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import Section from '@/src/components/kit/Section';
 import PageHeader from '@/src/components/kit/PageHeader';
 import PostsGrid from '@/components/PostsGrid';
-import { getGuides } from '@/src/i18n/data-translations';
+import { getGuides, getCategories, getSubcategories } from '@/src/i18n/data-translations';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,13 +14,27 @@ export default async function PostsPage({ searchParams }: { searchParams?: Promi
   const sub = sp.sub;
   const all = getGuides('en');
   const list = all.filter((g: any) => (!category || g.category === category) && (!sub || g.subcategory === sub));
+
+  let title = 'All Posts';
+  let description = 'Browse all buying guides and product roundups.';
+  if (category) {
+    const cat = getCategories('en').find((c: any) => c.slug === category);
+    title = `${cat?.name || category} Posts`;
+    description = `Latest guides and picks in ${cat?.name || category}.`;
+    if (sub) {
+      const subs = getSubcategories(category);
+      const subName = subs.find((s) => s.slug === sub)?.name || sub;
+      title = `${subName} Posts`;
+      description = `${subName} under ${cat?.name || category}.`;
+    }
+  }
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
         <Navigation />
         <main>
           <Section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto mt-6">
-            <PageHeader title="All Posts" description="Browse all buying guides and product roundups." />
+            <PageHeader title={title} description={description} />
             <PostsGrid guides={list as any[]} />
           </Section>
         </main>

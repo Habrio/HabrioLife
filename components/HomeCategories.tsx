@@ -36,12 +36,15 @@ export default function HomeCategories() {
   const subs = hoverCat ? getSubcategories(hoverCat).map((s) => s.name) : [];
 
   return (
-    <div className="mx-auto max-w-7xl">
+    <div
+      className="mx-auto max-w-7xl"
+      onMouseLeave={() => setHoverCat(undefined)}
+      onMouseEnter={() => {
+        /* keep state while inside block */
+      }}
+    >
       {/* Category tabs */}
-      <div
-        className="flex items-center justify-between gap-3 border-b border-slate-200 pb-2 dark:border-slate-700"
-        onMouseLeave={() => setHoverCat(undefined)}
-      >
+      <div className="flex items-center justify-between gap-3 border-b border-slate-200 pb-2 dark:border-slate-700">
         {cats.map((c) => (
           <button
             key={c.slug}
@@ -51,7 +54,7 @@ export default function HomeCategories() {
               setSelectedSub(undefined);
               setSelectedCat((prev) => (prev === c.slug ? undefined : c.slug));
             }}
-            className={`mx-1 flex-1 py-2 text-center text-sm font-semibold tracking-wide transition-colors ${
+            className={`mx-1 flex-1 py-3 text-center text-base md:text-lg font-semibold tracking-wide transition-colors ${
               (selectedCat || hoverCat) === c.slug ? 'text-saffron-700 dark:text-saffron-400' : 'text-slate-700 dark:text-slate-200'
             }`}
           >
@@ -60,9 +63,9 @@ export default function HomeCategories() {
         ))}
       </div>
 
-      {/* Subcategories row on hover only */}
+      {/* Subcategories row on hover only; remains visible when moving cursor down */}
       {hoverCat && (
-        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 rounded-xl border border-slate-200 bg-white/70 px-2 py-3 backdrop-blur dark:border-slate-700 dark:bg-slate-800/60">
           {subs.map((s) => (
             <button
               key={s}
@@ -70,7 +73,7 @@ export default function HomeCategories() {
                 setSelectedCat(hoverCat);
                 setSelectedSub((prev) => (prev === s ? undefined : s));
               }}
-              className={`rounded-xl border px-3 py-2 text-sm font-medium transition-colors ${
+              className={`rounded-xl border px-3 py-3 text-sm font-semibold tracking-wide transition-colors ${
                 selectedSub === s && selectedCat === hoverCat
                   ? 'border-saffron-300 bg-saffron-50 text-saffron-700 dark:border-slate-600 dark:bg-slate-800 dark:text-saffron-300'
                   : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200'
