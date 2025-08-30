@@ -8,7 +8,8 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import SearchBox from '@/components/SearchBox';
-import CategoryRow from '@/components/CategoryRow';
+import { useLanguage } from '@/src/i18n/LanguageProvider';
+import { t } from '@/src/i18n/dictionary';
 
 const easingOut: [number, number, number, number] = [0.16, 1, 0.3, 1]; // ≈ easeOut
 const easingInOut: [number, number, number, number] = [0.42, 0, 0.58, 1]; // ≈ easeInOut
@@ -31,9 +32,10 @@ const itemVariants: Variants = {
 };
 
 export default function Hero(): JSX.Element {
+  const { lang } = useLanguage();
 
   return (
-    <section className="relative min-h-[78vh] flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-[68vh] flex items-center justify-center overflow-hidden pt-16">
       {/* Background blobs */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full mix-blend-multiply blur-xl animate-pulse" />
@@ -48,13 +50,8 @@ export default function Hero(): JSX.Element {
           animate="visible"
           className="text-center"
         >
-          {/* Category row */}
-          <motion.div variants={itemVariants} className="mb-6">
-            <CategoryRow />
-          </motion.div>
-
           {/* Central Search */}
-          <motion.div variants={itemVariants} className="mb-8">
+          <motion.div variants={itemVariants} className="mt-10 mb-6">
             <SearchBox />
           </motion.div>
 
@@ -64,11 +61,11 @@ export default function Hero(): JSX.Element {
             className="mb-6 text-5xl font-bold leading-tight md:text-7xl"
           >
             <span className="bg-gradient-to-r from-slate-900 via-blue-800 to-slate-900 bg-clip-text text-transparent dark:from-white dark:via-blue-200 dark:to-white">
-              Discover How to Buy
+              {t('hero_title_1', lang)}
             </span>
             <br />
             <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-              the Best Products
+              {t('hero_title_2', lang)}
             </span>
           </motion.h1>
 
@@ -77,11 +74,9 @@ export default function Hero(): JSX.Element {
             variants={itemVariants}
             className="mx-auto mb-12 max-w-3xl text-xl leading-relaxed text-slate-600 dark:text-slate-300 md:text-2xl"
           >
-            Expert tips and step-by-step guides to help you make smart purchasing decisions.
+            {t('hero_sub_1', lang)}
             <br className="hidden md:block" />
-            <span className="font-semibold text-slate-700 dark:text-slate-200">
-              Shop smarter, buy with confidence.
-            </span>
+            <span className="font-semibold text-slate-700 dark:text-slate-200">{t('hero_sub_2', lang)}</span>
           </motion.p>
 
           {/* Primary CTAs removed; search is the central action */}

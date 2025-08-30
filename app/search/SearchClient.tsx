@@ -31,7 +31,7 @@ export default function SearchClient() {
   const categoryName = (slug: string) => dataCategories.find((c) => c.slug === slug)?.name || slug;
 
   return (
-    <Section className="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+    <Section className="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto mt-6">
       <PageHeader title={t('searchResults', lang)} description={q ? `"${q}"` : t('enterSearch', lang)} className="mb-4" />
 
       {!q ? (

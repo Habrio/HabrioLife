@@ -56,10 +56,13 @@ export default function SearchBox() {
           type="search"
           value={q}
           onChange={(e) => {
-            setQ(e.target.value);
-            setOpen(true);
+            const val = e.target.value;
+            setQ(val);
+            setOpen(val.trim().length > 0);
           }}
-          onFocus={() => setOpen(true)}
+          onFocus={() => {
+            if (q.trim().length > 0) setOpen(true);
+          }}
           placeholder="Search products, e.g. Laptop, AC, Shoes..."
           className="w-full rounded-2xl border border-slate-200 bg-white/70 pl-12 pr-40 py-3 text-base shadow-sm outline-none backdrop-blur placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-100"
         />
@@ -69,7 +72,7 @@ export default function SearchBox() {
         </Button>
       </form>
 
-      {open && (
+      {open && q.trim().length > 0 && (
         <div className="absolute z-30 mt-2 w-full overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 backdrop-blur dark:border-slate-700/80 dark:bg-slate-800/80">
           <Command shouldFilter={false} className="bg-transparent">
             <CommandList>

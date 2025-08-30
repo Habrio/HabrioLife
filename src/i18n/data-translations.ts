@@ -20,7 +20,23 @@ const categoryHi: Record<string, { name: string; description?: string }> = {
   'smart-spending-financials': { name: 'स्मार्ट खर्च और वित्त', description: 'वैल्यू बाय और मनी-स्मार्ट पिक्स' },
 };
 
-// Remap original guides to the new categories
+// Subcategories per category (EN). Keep 5 each.
+const subcategoriesByCat: Record<string, string[]> = {
+  'daily-essentials': ['Cleaning', 'Kitchen Basics', 'Hydration', 'Snacks', 'Travel'],
+  'household-needs': ['Appliances', 'Lighting', 'Storage', 'Tools', 'Safety'],
+  'health-personal-care': ['Fitness', 'Grooming', 'Wellness', 'Medical', 'Sleep'],
+  'baby-kids-school': ['School Supplies', 'Toys & Learning', 'Baby Care', 'Bags & Accessories', 'Stationery'],
+  'decor-furniture-storage': ['Living Room', 'Bedroom', 'Workspace', 'Wall Decor', 'Small Storage'],
+  'smart-spending-financials': ['Tech Savings', 'Budget Buys', 'Cashback & Deals', 'Accessories Value', 'Home Value'],
+};
+
+export function getSubcategories(catSlug: string) {
+  const names = subcategoriesByCat[catSlug] || [];
+  const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return names.map((name) => ({ name, slug: slugify(name) }));
+}
+
+// Remap original guides to the new categories and subcategories
 const guideCategoryRemap: Record<string, string> = {
   laptop: 'smart-spending-financials',
   'running-shoes': 'health-personal-care',
@@ -29,12 +45,21 @@ const guideCategoryRemap: Record<string, string> = {
   'buy-books-online': 'baby-kids-school',
 };
 
+const guideSubMap: Record<string, string> = {
+  laptop: 'Tech Savings',
+  'running-shoes': 'Fitness',
+  'air-conditioner': 'Appliances',
+  treadmill: 'Fitness',
+  'buy-books-online': 'School Supplies',
+};
+
 // Additional guides to guarantee at least 2 per category
 const extraGuides = [
   {
     title: 'How to Buy a Water Bottle',
     slug: 'water-bottle',
     category: 'daily-essentials',
+    subcategory: 'Hydration',
     product: 'Water Bottle',
     excerpt: 'Pick a durable, leak-proof bottle that suits your daily routine.',
     recommendations: {
@@ -56,6 +81,7 @@ const extraGuides = [
     title: 'Choosing Laundry Detergent',
     slug: 'laundry-detergent',
     category: 'daily-essentials',
+    subcategory: 'Cleaning',
     product: 'Detergent',
     excerpt: 'Powder vs liquid vs pods — what works best for your wash.',
     recommendations: {
@@ -77,6 +103,7 @@ const extraGuides = [
     title: 'How to Buy a Vacuum Cleaner',
     slug: 'vacuum-cleaner',
     category: 'household-needs',
+    subcategory: 'Appliances',
     product: 'Vacuum Cleaner',
     excerpt: 'Suction, filters, and form factor — find the right vacuum for your home.',
     recommendations: {
@@ -98,6 +125,7 @@ const extraGuides = [
     title: 'Best School Backpack Guide',
     slug: 'school-backpack',
     category: 'baby-kids-school',
+    subcategory: 'Bags & Accessories',
     product: 'Backpack',
     excerpt: 'Comfort, capacity, and durability for everyday school use.',
     recommendations: {
@@ -119,6 +147,7 @@ const extraGuides = [
     title: 'Buy a Bookshelf for Small Spaces',
     slug: 'bookshelf',
     category: 'decor-furniture-storage',
+    subcategory: 'Small Storage',
     product: 'Bookshelf',
     excerpt: 'Make the most of tight corners with compact shelving.',
     recommendations: {
@@ -140,6 +169,7 @@ const extraGuides = [
     title: 'Ergonomic Desk Chair Guide',
     slug: 'desk-chair',
     category: 'decor-furniture-storage',
+    subcategory: 'Workspace',
     product: 'Desk Chair',
     excerpt: 'Support, adjustability, and breathability for long work hours.',
     recommendations: {
@@ -161,6 +191,7 @@ const extraGuides = [
     title: 'Best Power Banks to Buy',
     slug: 'power-bank',
     category: 'smart-spending-financials',
+    subcategory: 'Accessories Value',
     product: 'Power Bank',
     excerpt: 'Capacity, ports and protections — charge safely on the go.',
     recommendations: {
@@ -204,7 +235,11 @@ export function getCategories(lang: Lang) {
 
 export function getGuides(lang: Lang) {
   // Start with remapped originals
-  const originals = enGuides.map((g) => ({ ...g, category: guideCategoryRemap[g.slug] || g.category }));
+  const originals = enGuides.map((g) => ({
+    ...g,
+    category: guideCategoryRemap[g.slug] || g.category,
+    subcategory: guideSubMap[g.slug] || undefined,
+  }));
   // Add extra guides
   let result: any[] = [...originals, ...extraGuides];
   if (lang === 'hi') {

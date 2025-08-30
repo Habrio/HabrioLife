@@ -11,7 +11,7 @@ export default function AboutPage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
         <Navigation />
         <main>
-          <Section className="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+          <Section className="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto mt-6">
             <PageHeader title="About Habrio" description="Your trusted companion for smarter shopping." />
             <Card className="rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur">
               <CardContent className="pt-6 text-slate-700 dark:text-slate-300">

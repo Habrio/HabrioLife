@@ -1,7 +1,6 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { categories, guides } from '@/lib/data';
 import QandA from './QandA';
 import { notFound } from 'next/navigation';
 import Section from '@/src/components/kit/Section';
@@ -18,19 +17,19 @@ interface GuidePageProps {
 
 export default async function GuidePage({ params }: GuidePageProps) {
   const { category: categorySlug, post: postSlug } = await params;
-
-  const guide = guides.find((g) => g.slug === postSlug && g.category === categorySlug);
+  const { getGuides, getCategories } = await import('@/src/i18n/data-translations');
+  const guide = getGuides('en').find((g: any) => g.slug === postSlug && g.category === categorySlug);
   if (!guide) {
     notFound();
   }
-  const category = categories.find((c) => c.slug === categorySlug);
+  const category = getCategories('en').find((c: any) => c.slug === categorySlug);
 
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
         <Navigation />
         <main>
-          <Section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+          <Section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto mt-6">
             <div className="mb-6 flex items-center gap-3">
               <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">{guide.title}</h1>
               {category?.name ? (
