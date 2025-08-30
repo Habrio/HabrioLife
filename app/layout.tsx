@@ -1,4 +1,5 @@
 import './globals.css';
+import { LanguageProvider } from '@/src/i18n/LanguageProvider';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -81,7 +82,7 @@ export default function RootLayout({
       </head>
       {/* Apply fonts with Tailwind or CSS instead of next/font */}
       <body className="font-sans antialiased">
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
   );

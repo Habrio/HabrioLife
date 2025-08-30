@@ -3,34 +3,34 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { categories } from '@/lib/data';
+import { useLanguage } from '@/src/i18n/LanguageProvider';
+import { getCategories } from '@/src/i18n/data-translations';
 import type { LucideIcon } from 'lucide-react';
-import { Monitor, ShoppingBag, Home as HomeIcon, Dumbbell, BookOpen, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Home as HomeIcon, HeartPulse, Baby, Sofa, Wallet, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { container, item, hover, spring } from '@/src/lib/motion';
 
 const iconMap: { [key: string]: LucideIcon } = {
-  electronics: Monitor,
-  fashion: ShoppingBag,
-  'home-garden': HomeIcon,
-  sports: Dumbbell,
-  books: BookOpen,
+  'daily-essentials': ShoppingBag,
+  'household-needs': HomeIcon,
+  'health-personal-care': HeartPulse,
+  'baby-kids-school': Baby,
+  'decor-furniture-storage': Sofa,
+  'smart-spending-financials': Wallet,
 };
 
 const categoryImages: Record<string, string> = {
-  electronics:
-    'https://images.pexels.com/photos/18106/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=800',
-  fashion:
-    'https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'home-garden':
-    'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=800',
-  sports:
-    'https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg?auto=compress&cs=tinysrgb&w=800',
-  books:
-    'https://images.pexels.com/photos/46274/pexels-photo-46274.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'daily-essentials': 'https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'household-needs': 'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'health-personal-care': 'https://images.pexels.com/photos/3757376/pexels-photo-3757376.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'baby-kids-school': 'https://images.pexels.com/photos/346796/pexels-photo-346796.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'decor-furniture-storage': 'https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=800',
+  'smart-spending-financials': 'https://images.pexels.com/photos/4968638/pexels-photo-4968638.jpeg?auto=compress&cs=tinysrgb&w=800',
 };
 
 function CategoryGrid() {
+  const { lang } = useLanguage();
+  const categories = getCategories(lang);
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
       {categories.map((cat) => {

@@ -8,6 +8,7 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 import SearchBox from '@/components/SearchBox';
+import CategoryRow from '@/components/CategoryRow';
 
 const easingOut: [number, number, number, number] = [0.16, 1, 0.3, 1]; // ≈ easeOut
 const easingInOut: [number, number, number, number] = [0.42, 0, 0.58, 1]; // ≈ easeInOut
@@ -47,6 +48,11 @@ export default function Hero(): JSX.Element {
           animate="visible"
           className="text-center"
         >
+          {/* Category row */}
+          <motion.div variants={itemVariants} className="mb-6">
+            <CategoryRow />
+          </motion.div>
+
           {/* Central Search */}
           <motion.div variants={itemVariants} className="mb-8">
             <SearchBox />

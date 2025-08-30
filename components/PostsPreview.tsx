@@ -1,7 +1,9 @@
 "use client";
 
 import Link from 'next/link';
-import { guides } from '@/lib/data';
+import { useLanguage } from '@/src/i18n/LanguageProvider';
+import { getGuides } from '@/src/i18n/data-translations';
+import { t } from '@/src/i18n/dictionary';
 import { motion } from 'framer-motion';
 import { container, item, hover, spring } from '@/src/lib/motion';
 
@@ -16,16 +18,17 @@ function getHeroImage(g: any) {
 }
 
 export default function PostsPreview() {
-  const latest = guides.slice(0, 3); // assuming array is curated; adjust ordering as needed
+  const { lang } = useLanguage();
+  const latest = getGuides(lang).slice(0, 6);
   return (
     <section className="mt-10">
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Latest Posts</h2>
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">{t('latestPosts', lang)}</h2>
         <Link
           href="/posts"
           className="text-sm font-medium text-slate-700 hover:text-saffron-700 dark:text-slate-300 dark:hover:text-saffron-400"
         >
-          All Posts →
+          {t('allPosts', lang)} →
         </Link>
       </div>
       <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -52,4 +55,3 @@ export default function PostsPreview() {
     </section>
   );
 }
-

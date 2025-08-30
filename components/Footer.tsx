@@ -9,8 +9,10 @@ export default function Footer() {
       title: 'Quick Links',
       links: [
         { label: 'Home', href: '/' },
-        { label: 'Categories', href: '/categories' },
         { label: 'About', href: '/about' },
+        { label: 'All Posts', href: '/posts' },
+        { label: 'Privacy Policy', href: '/privacy' },
+        { label: 'Terms of Service', href: '/terms' },
       ]
     },
     {
@@ -21,16 +23,6 @@ export default function Footer() {
         { label: 'Home & Garden', href: '/categories/home-garden' },
         { label: 'Sports', href: '/categories/sports' },
         { label: 'Books', href: '/categories/books' },
-      ]
-    },
-    {
-      title: 'Support',
-      links: [
-        { label: 'Help Center', href: '/help' },
-        { label: 'Contact Us', href: '/contact' },
-        { label: 'Return Policy', href: '/returns' },
-        { label: 'Shipping Info', href: '/shipping' },
-        { label: 'FAQ', href: '/faq' },
       ]
     }
   ];
@@ -72,15 +64,15 @@ export default function Footer() {
               <div className="space-y-3">
                 <div className="flex items-center text-slate-300">
                   <Mail className="w-4 h-4 mr-3" />
-                  <span>hello@habrio.in</span>
+                  <span>info@habrio.in</span>
                 </div>
                 <div className="flex items-center text-slate-300">
                   <Phone className="w-4 h-4 mr-3" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>+91 9871658358</span>
                 </div>
                 <div className="flex items-center text-slate-300">
                   <MapPin className="w-4 h-4 mr-3" />
-                  <span>San Francisco, CA</span>
+                  <span>Delhi, India</span>
                 </div>
               </div>
             </motion.div>
@@ -147,13 +139,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Affiliate Disclosure */}
-        <div className="mt-8 p-4 bg-slate-800/50 rounded-lg">
-          <p className="text-slate-400 text-sm text-center leading-relaxed">
-              <strong>Affiliate Disclosure:</strong> Habrio may earn a commission from purchases made through our affiliate links.
-              This doesn&apos;t affect the price you pay or our product recommendations. We only promote products we believe in.
-            </p>
-        </div>
+        {/* Affiliate disclosure removed */}
       </div>
     </footer>
   );

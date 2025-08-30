@@ -169,5 +169,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
 }
 
 export async function generateStaticParams() {
-  return guides.map((g) => ({ category: g.category, post: g.slug }));
+  const { getGuides } = await import('@/src/i18n/data-translations');
+  return getGuides('en').map((g: any) => ({ category: g.category, post: g.slug }));
 }

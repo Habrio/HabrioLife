@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import PageHeader from '@/src/components/kit/PageHeader';
 import Section from '@/src/components/kit/Section';
 import GuideGrid from '@/components/GuideGrid';
+import CategoryHeader from '@/components/CategoryHeader';
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
@@ -28,7 +29,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <Navigation />
         <main>
           <Section className="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-            <PageHeader title={category.name} description={category.description} />
+            <CategoryHeader slug={categorySlug} fallbackName={category.name} fallbackDescription={category.description} />
 
             {guidesForCategory.length === 0 ? (
               <p className="italic text-slate-500 dark:text-slate-400">
@@ -47,5 +48,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 }
 
 export async function generateStaticParams() {
-  return categories.map((cat) => ({ category: cat.slug }));
+  const { getCategories } = await import('@/src/i18n/data-translations');
+  return getCategories('en').map((cat: any) => ({ category: cat.slug }));
 }

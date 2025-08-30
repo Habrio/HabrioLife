@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { container, item, hover, spring } from '@/src/lib/motion';
 import { ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/src/i18n/LanguageProvider';
+import { getGuides } from '@/src/i18n/data-translations';
 
 type Guide = {
   slug: string;
@@ -24,9 +26,12 @@ type Guide = {
 };
 
 export default function GuideGrid({ guides, categorySlug }: { guides: Guide[]; categorySlug: string }) {
+  const { lang } = useLanguage();
+  const localizedBySlug = new Map(getGuides(lang).map((g: any) => [g.slug, g]));
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {guides.map((guide) => {
+        const lg = localizedBySlug.get(guide.slug) || guide;
         const recs = guide.recommendations;
         const heroImage = recs?.['mid-range']?.[0]?.image || recs?.['budget']?.[0]?.image || recs?.['premium']?.[0]?.image;
         return (
@@ -39,12 +44,12 @@ export default function GuideGrid({ guides, categorySlug }: { guides: Guide[]; c
                     <img src={heroImage} alt={guide.title} className="h-40 w-full object-cover" loading="lazy" />
                   </CardHeader>
                 ) : null}
-                <CardContent className="p-5">
-                  <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 line-clamp-2">{guide.title}</h3>
-                  {guide.excerpt ? (
-                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 line-clamp-3">{guide.excerpt}</p>
-                  ) : null}
-                </CardContent>
+                          <CardContent className="p-5">
+                            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 line-clamp-2">{lg.title}</h3>
+                            {lg.excerpt ? (
+                              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 line-clamp-3">{lg.excerpt}</p>
+                            ) : null}
+                          </CardContent>
                 <CardFooter className="p-5 pt-0">
                   <Button variant="default" className="rounded-full">
                     Read Guide <ArrowRight className="ml-1 h-4 w-4" />
@@ -58,4 +63,3 @@ export default function GuideGrid({ guides, categorySlug }: { guides: Guide[]; c
     </motion.div>
   );
 }
-

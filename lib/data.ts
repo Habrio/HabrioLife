@@ -1,16 +1,17 @@
 export const categories = [
-  { name: 'Electronics', slug: 'electronics', description: 'Devices, gadgets and tech products' },
-  { name: 'Fashion', slug: 'fashion', description: 'Clothing, apparel, and style accessories' },
-  { name: 'Home & Garden', slug: 'home-garden', description: 'Home appliances, furniture, and garden tools' },
-  { name: 'Sports', slug: 'sports', description: 'Fitness, sports gear, and outdoor equipment' },
-  { name: 'Books', slug: 'books', description: 'Literature, learning, and entertainment books' }
+  { name: 'Daily Essentials', slug: 'daily-essentials', description: 'Everyday items for home and on-the-go' },
+  { name: 'Household Needs', slug: 'household-needs', description: 'Appliances and tools for a smooth home' },
+  { name: 'Health & Personal Care', slug: 'health-personal-care', description: 'Fitness, wellness and grooming' },
+  { name: 'Baby, Kids & School', slug: 'baby-kids-school', description: 'Learning, school and parenting essentials' },
+  { name: 'Décor, Furniture & Storage', slug: 'decor-furniture-storage', description: 'Make spaces beautiful and organized' },
+  { name: 'Smart Spending & Financials', slug: 'smart-spending-financials', description: 'Value buys and money-smart picks' },
 ];
 
 export const guides = [
   {
     title: 'How to Buy a Laptop',
     slug: 'laptop',
-    category: 'electronics',
+    category: 'smart-spending-financials',
     product: 'Laptop',
     excerpt: 'Learn the key factors to consider when choosing a new laptop.',
     recommendations: {
@@ -73,7 +74,7 @@ export const guides = [
   {
     title: 'How to Buy Running Shoes',
     slug: 'running-shoes',
-    category: 'fashion',
+    category: 'health-personal-care',
     product: 'Running Shoes',
     excerpt: 'Discover what to look for in quality running footwear for any budget.',
     recommendations: {
@@ -136,7 +137,7 @@ export const guides = [
   {
     title: 'How to Buy an Air Conditioner',
     slug: 'air-conditioner',
-    category: 'home-garden',
+    category: 'household-needs',
     product: 'Air Conditioner',
     excerpt: 'Understand important criteria (capacity, efficiency, etc.) for AC units.',
     recommendations: {
@@ -199,7 +200,7 @@ export const guides = [
   {
     title: 'How to Buy a Treadmill',
     slug: 'treadmill',
-    category: 'sports',
+    category: 'health-personal-care',
     product: 'Treadmill',
     excerpt: 'Key features to consider when purchasing a home treadmill for exercise.',
     recommendations: {
@@ -262,7 +263,7 @@ export const guides = [
   {
     title: 'How to Buy Books Online',
     slug: 'buy-books-online',
-    category: 'books',
+    category: 'baby-kids-school',
     product: 'Books',
     excerpt: 'Tips for finding great books and deals when shopping online.',
     recommendations: {

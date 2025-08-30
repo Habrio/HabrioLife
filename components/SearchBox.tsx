@@ -2,32 +2,37 @@
 
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { categories, guides } from '@/lib/data';
+import { useLanguage } from '@/src/i18n/LanguageProvider';
+import { getCategories, getGuides } from '@/src/i18n/data-translations';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Tag, BookOpen, Search as SearchIcon } from 'lucide-react';
 
 export default function SearchBox() {
   const [q, setQ] = useState('');
+  const { lang } = useLanguage();
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const suggestions = useMemo(() => {
     const term = q.trim().toLowerCase();
-    if (!term) return { cats: [], posts: [] as typeof guides };
-    const cats = categories
-      .filter((c) => c.name.toLowerCase().includes(term) || c.slug.includes(term))
-      .slice(0, 5);
-    const posts = guides
-      .filter(
-        (g) =>
-          g.title.toLowerCase().includes(term) ||
-          g.product?.toLowerCase().includes(term) ||
-          g.category.toLowerCase().includes(term),
-      )
-      .slice(0, 7);
+    const catsAll = getCategories(lang);
+    const postsAll = getGuides(lang);
+    const cats = (term
+      ? catsAll.filter((c) => c.name.toLowerCase().includes(term) || c.slug.includes(term))
+      : catsAll
+    ).slice(0, 5);
+    const posts = (term
+      ? postsAll.filter(
+          (g: any) =>
+            g.title.toLowerCase().includes(term) ||
+            g.product?.toLowerCase().includes(term) ||
+            g.category.toLowerCase().includes(term),
+        )
+      : postsAll
+    ).slice(0, 7);
     return { cats, posts };
-  }, [q]);
+  }, [q, lang]);
 
   const submit = () => {
     if (!q.trim()) return;
@@ -36,7 +41,7 @@ export default function SearchBox() {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-2xl">
+    <div className="relative mx-auto w-full max-w-3xl">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -64,10 +69,9 @@ export default function SearchBox() {
         </Button>
       </form>
 
-      {open && q && (
+      {open && (
         <div className="absolute z-30 mt-2 w-full overflow-hidden rounded-2xl border border-slate-200/80 bg-white/90 backdrop-blur dark:border-slate-700/80 dark:bg-slate-800/80">
           <Command shouldFilter={false} className="bg-transparent">
-            <CommandInput value={q} onValueChange={setQ} placeholder="Refine search..." />
             <CommandList>
               {!suggestions.cats.length && !suggestions.posts.length ? (
                 <CommandEmpty>No results.</CommandEmpty>
@@ -112,4 +116,3 @@ export default function SearchBox() {
     </div>
   );
 }
-

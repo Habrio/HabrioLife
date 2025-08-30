@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon, ShoppingBag } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
+import LanguageToggle from './LanguageToggle';
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -77,8 +78,9 @@ export default function Navigation() {
 
             {/* Search removed from header; central search lives in Hero */}
 
-            {/* Theme Toggle & Mobile Menu */}
+            {/* Language + Theme + Mobile Menu */}
             <div className="flex items-center space-x-4">
+              <LanguageToggle />
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
