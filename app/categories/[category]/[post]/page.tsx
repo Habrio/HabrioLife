@@ -10,6 +10,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { fetchCategoryBySlug, fetchOneBlogByCategoryAndPost } from '@/src/lib/queries';
+import { MDXRemote } from 'next-mdx-remote/rsc';
+import { mdxComponents } from '@/src/components/mdx-components';
+import { publicImageUrl } from '@/src/lib/supabase';
+import Tiers from '@/src/components/tiers';
+import { fetchBlocksForBlog, fetchBlockItemsGrouped, fetchDynamicTierItemsForSubcategory } from '@/src/lib/catalog-queries';
+
+export const dynamic = 'force-dynamic';
 
 interface GuidePageProps {
   params: Promise<{ category: string; post: string }>;
@@ -17,12 +25,11 @@ interface GuidePageProps {
 
 export default async function GuidePage({ params }: GuidePageProps) {
   const { category: categorySlug, post: postSlug } = await params;
-  const { getGuides, getCategories } = await import('@/src/i18n/data-translations');
-  const guide = getGuides('en').find((g: any) => g.slug === postSlug && g.category === categorySlug);
-  if (!guide) {
+  const category = await fetchCategoryBySlug(categorySlug);
+  const guide = await fetchOneBlogByCategoryAndPost(categorySlug, postSlug);
+  if (!category || !guide) {
     notFound();
   }
-  const category = getCategories('en').find((c: any) => c.slug === categorySlug);
 
   return (
     <ThemeProvider>
@@ -45,9 +52,7 @@ export default async function GuidePage({ params }: GuidePageProps) {
                 <Card className="rounded-2xl bg-white/70 dark:bg-slate-800/70 backdrop-blur">
                   <CardContent className="pt-6">
                     <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
-                      {guide.product
-                        ? `Buying a ${guide.product.toLowerCase()} doesn’t need to be overwhelming. This guide distills what truly matters so you can pick the right ${guide.product.toLowerCase()} for your needs and budget.`
-                        : 'Buying the right product doesn’t need to be overwhelming. This guide distills what truly matters so you can choose confidently.'}
+                      {guide.excerpt || 'Shopping smarter starts with understanding what matters most for your needs.'}
                     </p>
                     <Separator className="my-4" />
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -67,57 +72,53 @@ export default async function GuidePage({ params }: GuidePageProps) {
                   </CardContent>
                 </Card>
 
-                {/* Sections */}
-                <article className="prose prose-slate dark:prose-invert max-w-none mt-6">
-                  <h2 id="budget-usage">1. Budget and Usage</h2>
-                  <p>
-                    Start with a realistic budget and your primary use-cases. Consider how often you’ll use it
-                    and which features are essential versus nice-to-have.
-                  </p>
+            {/* Content (MDX from DB if available) */}
+            {guide.cover_image_path && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={publicImageUrl(guide.cover_image_path)} alt={guide.title} className="rounded-2xl mb-6 w-full" />
+            )}
+            <article className="prose prose-slate dark:prose-invert max-w-none mt-6">
+              {guide.content_mdx ? (
+                <MDXRemote source={guide.content_mdx} components={mdxComponents as any} />
+              ) : (
+                <p className="text-slate-600 dark:text-slate-300">Content coming soon.</p>
+              )}
+            </article>
 
-                  <h2 id="key-specs">2. Key Specifications</h2>
-                  <p>Focus on the specs that impact performance and experience. Common items to evaluate:</p>
-                  <ul>
-                    <li><strong>Performance:</strong> Match the power (CPU/Motor, etc.) to your workload.</li>
-                    <li><strong>Size & Capacity:</strong> Ensure it fits your space and needs.</li>
-                    <li><strong>Build Quality:</strong> Prefer sturdy materials and reliable components.</li>
-                  </ul>
+            {/* Recommendations (curated first, dynamic fallback) */}
+            {await (async () => {
+              let budget: any[] = [];
+              let mid: any[] = [];
+              let premium: any[] = [];
+              try {
+                const blocks = await fetchBlocksForBlog(guide.id);
+                if (blocks.length > 0) {
+                  const grouped = await fetchBlockItemsGrouped(blocks[0].id);
+                  budget = grouped['budget'] ?? [];
+                  mid = grouped['mid-range'] ?? grouped['mid'] ?? [];
+                  premium = grouped['premium'] ?? [];
+                } else if ((guide as any).subcategory_id) {
+                  const dyn = await fetchDynamicTierItemsForSubcategory((guide as any).subcategory_id);
+                  budget = dyn.budget;
+                  mid = dyn.mid;
+                  premium = dyn.premium;
+                }
+              } catch {}
 
-                  {guide.product?.toLowerCase() === 'laptop' && (
-                    <>
-                      <h3>For Laptops</h3>
-                      <ul>
-                        <li><strong>Processor:</strong> Intel i5/Ryzen 5 or better for balanced performance.</li>
-                        <li><strong>Memory:</strong> 8GB minimum for multitasking; 16GB+ for longevity.</li>
-                        <li><strong>Storage:</strong> SSD preferred; 256GB+ recommended.</li>
-                        <li><strong>Display:</strong> 14–15.6” FHD is a sweet spot for most users.</li>
-                        <li><strong>Battery:</strong> Aim for 6+ hours real-world usage.</li>
-                      </ul>
-                    </>
+              return (
+                <div className="mt-8">
+                  {budget.length + mid.length + premium.length > 0 ? (
+                    <Tiers budget={budget as any} mid={mid as any} premium={premium as any} />
+                  ) : (
+                    <section className="mt-10">
+                      <div className="rounded-2xl border p-6 text-center text-slate-600">
+                        Recommendations coming soon.
+                      </div>
+                    </section>
                   )}
-
-                  <h2 id="support">3. Brand, Support, and Warranty</h2>
-                  <p>
-                    Reputable brands often provide better quality control and after-sales support. Check warranty terms,
-                    service networks, and user reviews for real-world reliability.
-                  </p>
-
-                  <h2 id="checklist">Buying Checklist</h2>
-                  <ul className="not-prose grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {[
-                      'Set a realistic budget',
-                      'List top 3 use-cases',
-                      'Shortlist 2–3 trusted brands',
-                      'Compare key specs side-by-side',
-                      'Check warranty and service',
-                      'Read a few recent reviews',
-                    ].map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-slate-700 dark:text-slate-300">
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 text-green-600" /> {item}
-                      </li>
-                    ))}
-                  </ul>
-                </article>
+                </div>
+              );
+            })()}
 
                 {/* Quick picks CTA */}
                 <div className="mt-6 flex flex-wrap gap-3">

@@ -15,9 +15,11 @@ const subcategories: Record<string, string[]> = {
   'smart-spending-financials': ['Tech Savings', 'Budget Buys', 'Cashback & Deals', 'Accessories Value', 'Home Value'],
 };
 
-export default function HomeCategories() {
+type CatLite = { slug: string; name: string };
+
+export default function HomeCategories({ categoriesOverride }: { categoriesOverride?: CatLite[] }) {
   const { lang } = useLanguage();
-  const cats = getCategories(lang);
+  const cats = categoriesOverride ?? getCategories(lang);
   const [hoverCat, setHoverCat] = useState<string | undefined>(undefined); // for showing subs
   const [selectedCat, setSelectedCat] = useState<string | undefined>(undefined); // click selection
   const [selectedSub, setSelectedSub] = useState<string | undefined>(undefined);

@@ -8,6 +8,7 @@ import { container, item, hover, spring } from '@/src/lib/motion';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/src/i18n/LanguageProvider';
 import { getGuides } from '@/src/i18n/data-translations';
+import { publicImageUrl } from '@/src/lib/supabase';
 
 type Guide = {
   slug: string;
@@ -32,8 +33,17 @@ export default function GuideGrid({ guides, categorySlug }: { guides: Guide[]; c
     <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {guides.map((guide) => {
         const lg = localizedBySlug.get(guide.slug) || guide;
-        const recs = guide.recommendations;
-        const heroImage = recs?.['mid-range']?.[0]?.image || recs?.['budget']?.[0]?.image || recs?.['premium']?.[0]?.image;
+        const recs = (guide as any).recommendations as any;
+        let heroImage =
+          (guide as any).cover_image_path
+            ? publicImageUrl((guide as any).cover_image_path)
+            : undefined;
+        if (!heroImage && recs) {
+          heroImage =
+            recs?.['mid-range']?.[0]?.image ||
+            recs?.['budget']?.[0]?.image ||
+            recs?.['premium']?.[0]?.image;
+        }
         return (
           <motion.div key={guide.slug} variants={item} whileHover={hover} transition={spring}>
             <Link href={`/categories/${categorySlug}/${guide.slug}`} aria-label={`Read guide: ${guide.title}`}>
@@ -46,8 +56,8 @@ export default function GuideGrid({ guides, categorySlug }: { guides: Guide[]; c
                 ) : null}
                           <CardContent className="p-5">
                             <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100 line-clamp-2">{lg.title}</h3>
-                            {lg.excerpt ? (
-                              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 line-clamp-3">{lg.excerpt}</p>
+                            {(lg as any).excerpt ? (
+                              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 line-clamp-3">{(lg as any).excerpt}</p>
                             ) : null}
                           </CardContent>
                 <CardFooter className="p-5 pt-0">

@@ -5,8 +5,10 @@ import { motion } from 'framer-motion';
 import { container, item, hover, spring } from '@/src/lib/motion';
 import { useLanguage } from '@/src/i18n/LanguageProvider';
 import { getGuides } from '@/src/i18n/data-translations';
+import { publicImageUrl } from '@/src/lib/supabase';
 
 function heroFor(g: any) {
+  if (g?.cover_image_path) return publicImageUrl(g.cover_image_path);
   const r = g?.recommendations as any;
   return r?.['mid-range']?.[0]?.image || r?.['budget']?.[0]?.image || r?.['premium']?.[0]?.image;
 }

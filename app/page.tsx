@@ -1,6 +1,4 @@
-'use client';
-
-import { motion } from 'framer-motion';
+// Server Component: keeps UI the same, allows async children
 import Hero from '@/components/Hero';
 import Newsletter from '@/components/Newsletter';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -8,6 +6,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import HomeCategories from '@/components/HomeCategories';
 import PostsPreview from '@/components/PostsPreview';
+import HomeCategoriesServer from '@/components/HomeCategoriesServer';
 
 export default function Home() {
   return (
@@ -17,7 +16,8 @@ export default function Home() {
         <main>
           <Hero />
           <section className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <HomeCategories />
+            {/* Server-fetched categories from Supabase; UI unchanged */}
+            <HomeCategoriesServer />
           </section>
           
           <Newsletter />

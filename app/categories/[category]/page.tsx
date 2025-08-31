@@ -6,7 +6,9 @@ import { notFound } from 'next/navigation';
 import PageHeader from '@/src/components/kit/PageHeader';
 import Section from '@/src/components/kit/Section';
 import GuideGrid from '@/components/GuideGrid';
-import CategoryHeader from '@/components/CategoryHeader';
+import { fetchCategoryBySlug, fetchGuidesInCategory } from '@/src/lib/queries';
+
+export const dynamic = 'force-dynamic';
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
@@ -14,14 +16,13 @@ interface CategoryPageProps {
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category: categorySlug } = await params;
-  const { getCategories, getGuides } = await import('@/src/i18n/data-translations');
-  const category = getCategories('en').find((cat: any) => cat.slug === categorySlug);
+  const category = await fetchCategoryBySlug(categorySlug);
   if (!category) {
     notFound();
   }
 
   // Filter guides belonging to this category slug
-  const guidesForCategory = getGuides('en').filter((g: any) => g.category === categorySlug);
+  const guidesForCategory = await fetchGuidesInCategory(categorySlug);
 
   return (
     <ThemeProvider>
@@ -29,7 +30,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         <Navigation />
         <main>
           <Section className="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto mt-6">
-            <CategoryHeader slug={categorySlug} fallbackName={category.name} fallbackDescription={category.description} />
+            <PageHeader title={category.name} description={category.description ?? undefined} />
 
             {guidesForCategory.length === 0 ? (
               <p className="italic text-slate-500 dark:text-slate-400">
