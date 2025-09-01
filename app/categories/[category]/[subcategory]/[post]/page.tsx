@@ -15,12 +15,14 @@ export const dynamic = 'force-dynamic';
 
 type Params = { category: string; subcategory: string; post: string };
 
-export default async function GuidePage({ params }: { params: Params }) {
-  const category = await fetchCategoryBySlug(params.category);
+export default async function GuidePage({ params }: { params: Promise<Params> }) {
+  const { category: categorySlug, subcategory: subcategorySlug, post: postSlug } = await params;
+
+  const category = await fetchCategoryBySlug(categorySlug);
   if (!category) notFound();
-  const sub = await fetchSubcategoryBySlugs(params.category, params.subcategory);
+  const sub = await fetchSubcategoryBySlugs(categorySlug, subcategorySlug);
   if (!sub) notFound();
-  const blog = await fetchOneBlog(params.category, params.subcategory, params.post);
+  const blog = await fetchOneBlog(categorySlug, subcategorySlug, postSlug);
   if (!blog) notFound();
 
   // Recommendations
