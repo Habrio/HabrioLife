@@ -51,25 +51,30 @@ export default function PostsPreview() {
         </Link>
       </div>
       <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {rows.map((g) => {
-          const img = getHeroImage(g);
-          return (
-            <motion.article key={`${g.category}-${g.slug}`} variants={item} whileHover={hover} transition={spring}>
-              <Link href={`/categories/${catSlugMap.get((g as any).category_id) ?? ''}/${subSlugMap.get((g as any).subcategory_id) ?? ''}/${g.slug}`} className="group block">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                {(g.cover_image_path ? publicImageUrl(g.cover_image_path) : undefined) ? (
-                  <img src={publicImageUrl(g.cover_image_path as string)} alt={g.title} className="h-56 w-full rounded-2xl object-cover" loading="lazy" />
-                ) : (
-                  <div className="h-56 w-full rounded-2xl bg-slate-100 dark:bg-slate-800" />
-                )}
-                <h3 className="mt-4 text-lg font-semibold leading-snug text-slate-800 group-hover:text-saffron-700 dark:text-slate-100 dark:group-hover:text-saffron-400">
-                  {g.title}
-                </h3>
-                <p className="mt-1 text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">By Habrio • Guides</p>
-              </Link>
-            </motion.article>
-          );
-        })}
+        {rows.map((g) => (
+          <motion.article key={g.id} variants={item} whileHover={hover} transition={spring}>
+            <Link
+              href={`/categories/${catSlugMap.get((g as any).category_id) ?? ''}/${subSlugMap.get((g as any).subcategory_id) ?? ''}/${g.slug}`}
+              className="group block"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              {(g.cover_image_path ? publicImageUrl(g.cover_image_path) : undefined) ? (
+                <img
+                  src={publicImageUrl(g.cover_image_path as string)}
+                  alt={g.title}
+                  className="h-56 w-full rounded-2xl object-cover"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="h-56 w-full rounded-2xl bg-slate-100 dark:bg-slate-800" />
+              )}
+              <h3 className="mt-4 text-lg font-semibold leading-snug text-slate-800 group-hover:text-saffron-700 dark:text-slate-100 dark:group-hover:text-saffron-400">
+                {g.title}
+              </h3>
+              <p className="mt-1 text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">By Habrio • Guides</p>
+            </Link>
+          </motion.article>
+        ))}
       </motion.div>
     </section>
   );
