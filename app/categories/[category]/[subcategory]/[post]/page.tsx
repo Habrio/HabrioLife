@@ -34,9 +34,13 @@ export default async function GuidePage({ params }: { params: Params }) {
       premium = grouped['premium'] ?? [];
     } else {
       const dyn = await fetchDynamicTierItemsForSubcategory(sub.id);
-      budget = dyn.budget; mid = dyn.mid; premium = dyn.premium;
+      budget = dyn.budget;
+      mid = dyn.mid;
+      premium = dyn.premium;
     }
-  } catch {}
+  } catch (err) {
+    console.error(err);
+  }
 
   return (
     <ThemeProvider>

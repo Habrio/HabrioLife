@@ -28,7 +28,7 @@ const products: Product[] = [
   { id: 6, title: 'Smart LED Bulbs (4-Pack)', category: 'Home', price: 39, originalPrice: 59, rating: 4.3, reviews: 1876, image: 'https://images.pexels.com/photos/1112598/pexels-photo-1112598.jpeg?auto=compress&cs=tinysrgb&w=400', affiliate: 'https://amazon.com/dp/example6' },
 ];
 
-export default function ProductGrid(): JSX.Element {
+export default function ProductGrid() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [sortBy, setSortBy] = useState<SortType>('featured');
   const [viewMode, setViewMode] = useState<ViewMode>('grid');

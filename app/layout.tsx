@@ -1,6 +1,7 @@
 import './globals.css';
 import { LanguageProvider } from '@/src/i18n/LanguageProvider';
 import type { Metadata } from 'next';
+import React from 'react';
 
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),

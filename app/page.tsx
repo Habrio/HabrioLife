@@ -4,7 +4,6 @@ import Newsletter from '@/components/Newsletter';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import HomeCategories from '@/components/HomeCategories';
 import PostsPreview from '@/components/PostsPreview';
 import HomeCategoriesServer from '@/components/HomeCategoriesServer';
 

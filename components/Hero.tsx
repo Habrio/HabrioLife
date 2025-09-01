@@ -1,12 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { motion, Variants } from 'framer-motion';
-import {
-  ArrowRight,
-  type LucideIcon,
-} from 'lucide-react';
 import SearchBox from '@/components/SearchBox';
 import { useLanguage } from '@/src/i18n/LanguageProvider';
 import { t } from '@/src/i18n/dictionary';
@@ -31,7 +26,7 @@ const itemVariants: Variants = {
   },
 };
 
-export default function Hero(): JSX.Element {
+export default function Hero() {
   const { lang } = useLanguage();
 
   return (

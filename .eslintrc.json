@@ -1,6 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "eslint:recommended"],
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react"],
   "parserOptions": { "ecmaVersion": 2022, "sourceType": "module" },
   "rules": {
     "react/jsx-no-useless-fragment": ["warn", { "allowExpressions": true }],

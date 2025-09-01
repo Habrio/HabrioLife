@@ -1,17 +1,18 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 
 export type Lang = 'en' | 'hi';
 
 type Ctx = {
   lang: Lang;
-  setLang: (l: Lang) => void;
+  // eslint-disable-next-line no-unused-vars
+  setLang: (_lang: Lang) => void;
 };
 
 const LanguageContext = createContext<Ctx | null>(null);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
+export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>('en');
 
   useEffect(() => {
@@ -23,7 +24,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     setLangState(l);
     try {
       localStorage.setItem('lang', l);
-    } catch {}
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const value = useMemo(() => ({ lang, setLang }), [lang]);

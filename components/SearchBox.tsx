@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/src/i18n/LanguageProvider';
 import { getCategories, getGuides } from '@/src/i18n/data-translations';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Tag, BookOpen, Search as SearchIcon } from 'lucide-react';
 

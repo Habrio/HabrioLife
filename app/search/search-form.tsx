@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 
 export default function SearchForm({
   initialQ,
@@ -24,7 +24,7 @@ export default function SearchForm({
     setSub(initialSub);
   }, [initialQ, initialCategory, initialSub]);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const p = new URLSearchParams(sp.toString());
     q ? p.set('q', q) : p.delete('q');

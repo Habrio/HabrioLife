@@ -6,15 +6,6 @@ import { getCategories, getGuides, getSubcategories } from '@/src/i18n/data-tran
 import PostsGrid from '@/components/PostsGrid';
 import Link from 'next/link';
 
-const subcategories: Record<string, string[]> = {
-  'daily-essentials': ['Cleaning', 'Kitchen Basics', 'Hydration', 'Snacks', 'Travel'],
-  'household-needs': ['Appliances', 'Lighting', 'Storage', 'Tools', 'Safety'],
-  'health-personal-care': ['Fitness', 'Grooming', 'Wellness', 'Medical', 'Sleep'],
-  'baby-kids-school': ['School Supplies', 'Toys & Learning', 'Baby Care', 'Bags & Accessories', 'Stationery'],
-  'decor-furniture-storage': ['Living Room', 'Bedroom', 'Workspace', 'Wall Decor', 'Small Storage'],
-  'smart-spending-financials': ['Tech Savings', 'Budget Buys', 'Cashback & Deals', 'Accessories Value', 'Home Value'],
-};
-
 type CatLite = { slug: string; name: string };
 
 export default function HomeCategories({ categoriesOverride }: { categoriesOverride?: CatLite[] }) {

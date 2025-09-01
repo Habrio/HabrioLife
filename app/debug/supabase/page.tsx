@@ -1,4 +1,3 @@
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import { fetchCategories } from '@/src/lib/queries';
 
 export const dynamic = 'force-dynamic';
