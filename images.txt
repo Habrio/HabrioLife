@@ -1,0 +1,29 @@
+# Supabase Image Requirements
+
+Upload the following images to the public `assets` bucket in Supabase Storage.
+Each path is relative to the bucket root.
+
+1. **Site Logo**
+   - Path: `assets/brand/logo.png`
+   - Recommended size: 256x256 PNG with transparent background.
+   - Optionally generate using an AI logo generator or design tool.
+
+2. **Hero Section Background**
+   - Path: `assets/hero/hero-bg.jpg`
+   - Recommended size: 1600x900 JPG optimized for web.
+   - Can be sourced from free stock photos or created with AI image tools.
+
+3. **Blog Cover Images**
+   - Path pattern: `assets/blogs/<blog-slug>/cover.jpg`
+   - Recommended size: 1200x630 JPG for social sharing.
+   - Use actual product/photos or generate illustrations with AI.
+
+4. **Category Thumbnails (optional)**
+   - Path pattern: `assets/categories/<category-slug>.jpg`
+   - Recommended size: 600x400 JPG.
+   - Useful if categories require visual icons; can be AI-generated.
+
+### Upload Options
+- Use Supabase dashboard Storage section to upload files manually.
+- Use Supabase CLI or `@supabase/storage-js` in scripts to upload programmatically.
+- For AI generation, tools like DALL·E, Midjourney, or Stable Diffusion can create images which you can download and upload to the paths above.

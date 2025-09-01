@@ -26,6 +26,7 @@ export type Blog = {
   slug: string;
   excerpt: string | null;
   cover_image_path: string | null;
+  /** Raw MDX string compiled at request time */
   content_mdx: string | null;
   status: 'draft' | 'published' | 'archived';
   published_at: string | null;

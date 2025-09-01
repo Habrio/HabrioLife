@@ -3,24 +3,31 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { container, item, hover, spring } from '@/src/lib/motion';
-import { useLanguage } from '@/src/i18n/LanguageProvider';
-import { getGuides } from '@/src/i18n/data-translations';
 import { publicImageUrl } from '@/src/lib/supabase';
 
-function heroFor(g: any) {
+export type Guide = {
+  id: string;
+  title: string;
+  slug: string;
+  categorySlug: string;
+  subcategorySlug: string;
+  cover_image_path?: string | null;
+};
+
+function heroFor(g: Guide) {
   if (g?.cover_image_path) return publicImageUrl(g.cover_image_path);
-  const r = g?.recommendations as any;
-  return r?.['mid-range']?.[0]?.image || r?.['budget']?.[0]?.image || r?.['premium']?.[0]?.image;
+  return '';
 }
 
-export default function PostsGrid({ guides }: { guides: any[] }) {
-  const { lang } = useLanguage();
-  const localized = getGuides(lang);
+export default function PostsGrid({ guides }: { guides: Guide[] }) {
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {(guides || localized).map((g) => (
-        <motion.article key={`${g.category}-${g.slug}`} variants={item} whileHover={hover} transition={spring}>
-          <Link href={`/categories/${g.category}/${g.slug}`} className="group block">
+      {guides.map((g) => (
+        <motion.article key={g.id} variants={item} whileHover={hover} transition={spring}>
+          <Link
+            href={`/categories/${g.categorySlug}/${g.subcategorySlug}/${g.slug}`}
+            className="group block"
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             {heroFor(g) ? (
               <img src={heroFor(g)} alt={g.title} className="h-56 w-full rounded-2xl object-cover" loading="lazy" />
@@ -30,7 +37,7 @@ export default function PostsGrid({ guides }: { guides: any[] }) {
             <h3 className="mt-4 text-lg font-semibold leading-snug text-slate-800 group-hover:text-saffron-700 dark:text-slate-100 dark:group-hover:text-saffron-400">
               {g.title}
             </h3>
-            <p className="mt-1 text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">By Habrio • {g.category}</p>
+            <p className="mt-1 text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">By Habrio</p>
           </Link>
         </motion.article>
       ))}

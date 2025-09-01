@@ -1,38 +1,68 @@
 "use client";
 
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useLanguage } from '@/src/i18n/LanguageProvider';
-import { getCategories, getGuides } from '@/src/i18n/data-translations';
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Tag, BookOpen, Search as SearchIcon } from 'lucide-react';
+import { supabase } from '@/src/lib/supabase';
+import { fetchAllCategoriesMap, fetchAllSubcategoriesMap } from '@/src/lib/queries';
+
+type SuggestionState = {
+  cats: { name: string; slug: string }[];
+  posts: { title: string; slug: string; categorySlug: string; subcategorySlug: string }[];
+};
 
 export default function SearchBox() {
   const [q, setQ] = useState('');
-  const { lang } = useLanguage();
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const [suggestions, setSuggestions] = useState<SuggestionState>({ cats: [], posts: [] });
+  const [catSlugMap, setCatSlugMap] = useState<Map<string, string>>(new Map());
+  const [subSlugMap, setSubSlugMap] = useState<Map<string, string>>(new Map());
 
-  const suggestions = useMemo(() => {
-    const term = q.trim().toLowerCase();
-    const catsAll = getCategories(lang);
-    const postsAll = getGuides(lang);
-    const cats = (term
-      ? catsAll.filter((c) => c.name.toLowerCase().includes(term) || c.slug.includes(term))
-      : catsAll
-    ).slice(0, 5);
-    const posts = (term
-      ? postsAll.filter(
-          (g: any) =>
-            g.title.toLowerCase().includes(term) ||
-            g.product?.toLowerCase().includes(term) ||
-            g.category.toLowerCase().includes(term),
-        )
-      : postsAll
-    ).slice(0, 7);
-    return { cats, posts };
-  }, [q, lang]);
+  useEffect(() => {
+    (async () => {
+      const catMap = await fetchAllCategoriesMap();
+      const subMap = await fetchAllSubcategoriesMap();
+      setCatSlugMap(new Map(Array.from(catMap.entries()).map(([id, c]: any) => [id, c.slug])));
+      setSubSlugMap(new Map(Array.from(subMap.entries()).map(([id, s]: any) => [id, s.slug])));
+    })();
+  }, []);
+
+  useEffect(() => {
+    const term = q.trim();
+    if (!term) {
+      setSuggestions({ cats: [], posts: [] });
+      return;
+    }
+    let active = true;
+    (async () => {
+      const { data: cats } = await supabase
+        .from('categories')
+        .select('name,slug')
+        .eq('is_active', true)
+        .ilike('name', `%${term}%`)
+        .limit(5);
+      const { data: posts } = await supabase
+        .from('blogs')
+        .select('title,slug,category_id,subcategory_id')
+        .eq('status', 'published')
+        .ilike('title', `%${term}%`)
+        .limit(7);
+      if (!active) return;
+      const mappedPosts = (posts || []).map((p: any) => ({
+        title: p.title,
+        slug: p.slug,
+        categorySlug: catSlugMap.get(p.category_id) || '',
+        subcategorySlug: subSlugMap.get(p.subcategory_id) || '',
+      }));
+      setSuggestions({ cats: cats || [], posts: mappedPosts });
+    })();
+    return () => {
+      active = false;
+    };
+  }, [q, catSlugMap, subSlugMap]);
 
   const submit = () => {
     if (!q.trim()) return;
@@ -99,9 +129,9 @@ export default function SearchBox() {
                     <CommandGroup heading="Guides">
                       {suggestions.posts.map((g) => (
                         <CommandItem
-                          key={`${g.category}-${g.slug}`}
+                          key={`${g.categorySlug}-${g.slug}`}
                           onSelect={() => {
-                            router.push(`/categories/${g.category}/${g.slug}`);
+                            router.push(`/categories/${g.categorySlug}/${g.subcategorySlug}/${g.slug}`);
                             setOpen(false);
                           }}
                         >

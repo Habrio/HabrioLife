@@ -2,6 +2,9 @@ import './globals.css';
 import { LanguageProvider } from '@/src/i18n/LanguageProvider';
 import type { Metadata } from 'next';
 import React from 'react';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),
@@ -83,7 +86,13 @@ export default function RootLayout({
       </head>
       {/* Apply fonts with Tailwind or CSS instead of next/font */}
       <body className="font-sans antialiased">
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <ThemeProvider>
+            <Navigation />
+            <main className="pt-16 min-h-screen">{children}</main>
+            <Footer />
+          </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

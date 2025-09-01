@@ -3,6 +3,17 @@ import { env, assertEnv } from './env';
 
 assertEnv();
 
+// Allow server-side fetches to go through an HTTP(S) proxy if configured.
+if (typeof window === 'undefined') {
+  const proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY;
+  if (proxy) {
+    // Dynamically import to avoid bundling `undici` in client builds
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { ProxyAgent, setGlobalDispatcher } = eval('require')('undici');
+    setGlobalDispatcher(new ProxyAgent(proxy));
+  }
+}
+
 export const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON);
 
 /** Build public URL for a Storage object path like 'assets/blogs/slug/cover.jpg' */

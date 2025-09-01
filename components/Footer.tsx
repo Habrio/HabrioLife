@@ -2,8 +2,19 @@
 
 import { motion } from 'framer-motion';
 import { ShoppingBag, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { fetchCategories } from '@/src/lib/queries';
 
 export default function Footer() {
+  const [categoryLinks, setCategoryLinks] = useState<{ label: string; href: string }[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const cats = await fetchCategories();
+      setCategoryLinks(cats.map((c) => ({ label: c.name, href: `/categories/${c.slug}` })));
+    })();
+  }, []);
+
   const footerSections = [
     {
       title: 'Quick Links',
@@ -17,13 +28,7 @@ export default function Footer() {
     },
     {
       title: 'Categories',
-      links: [
-        { label: 'Electronics', href: '/categories/electronics' },
-        { label: 'Fashion', href: '/categories/fashion' },
-        { label: 'Home & Garden', href: '/categories/home-garden' },
-        { label: 'Sports', href: '/categories/sports' },
-        { label: 'Books', href: '/categories/books' },
-      ]
+      links: categoryLinks,
     }
   ];
 
