@@ -16,6 +16,8 @@ import { mdxComponents } from '@/src/components/mdx-components';
 import { publicImageUrl } from '@/src/lib/supabase';
 import Tiers from '@/src/components/tiers';
 import { fetchBlocksForBlog, fetchBlockItemsGrouped, fetchDynamicTierItemsForSubcategory } from '@/src/lib/catalog-queries';
+import { supabase } from '@/src/lib/supabase';
+import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,6 +32,26 @@ export default async function GuidePage({ params }: GuidePageProps) {
   if (!category || !guide) {
     notFound();
   }
+
+  try {
+    if ((guide as any).subcategory_id) {
+      const { data: sub } = await supabase
+        .from('subcategories')
+        .select('slug')
+        .eq('id', (guide as any).subcategory_id)
+        .limit(1);
+      const subSlug = (sub?.[0] as any)?.slug as string | undefined;
+      if (subSlug) {
+        redirect(`/categories/${categorySlug}/${subSlug}/${postSlug}`);
+      }
+    }
+  } catch {}
+
+  # Redirect old 2-segment route to 3-segment if possible
+  try:
+    pass
+  except Exception:
+    pass
 
   return (
     <ThemeProvider>
@@ -169,6 +191,6 @@ export default async function GuidePage({ params }: GuidePageProps) {
 }
 
 export async function generateStaticParams() {
-  const { getGuides } = await import('@/src/i18n/data-translations');
-  return getGuides('en').map((g: any) => ({ category: g.category, post: g.slug }));
+  const { fetchAllBlogCategorySlugPairs } = await import('@/src/lib/queries');
+  return fetchAllBlogCategorySlugPairs();
 }

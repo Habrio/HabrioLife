@@ -26,7 +26,15 @@ type Guide = {
   };
 };
 
-export default function GuideGrid({ guides, categorySlug }: { guides: Guide[]; categorySlug: string }) {
+export default function GuideGrid({
+  guides,
+  categorySlug,
+  subSlugById,
+}: {
+  guides: Guide[];
+  categorySlug: string;
+  subSlugById?: Record<string, string>;
+}) {
   const { lang } = useLanguage();
   const localizedBySlug = new Map(getGuides(lang).map((g: any) => [g.slug, g]));
   return (
@@ -44,9 +52,12 @@ export default function GuideGrid({ guides, categorySlug }: { guides: Guide[]; c
             recs?.['budget']?.[0]?.image ||
             recs?.['premium']?.[0]?.image;
         }
+        const subSlug =
+          (guide as any).subcategory_slug ||
+          (subSlugById && subSlugById[(guide as any).subcategory_id]);
         return (
           <motion.div key={guide.slug} variants={item} whileHover={hover} transition={spring}>
-            <Link href={`/categories/${categorySlug}/${guide.slug}`} aria-label={`Read guide: ${guide.title}`}>
+            <Link href={`/categories/${categorySlug}/${subSlug ?? ''}/${guide.slug}`} aria-label={`Read guide: ${guide.title}`}>
               <Card className="overflow-hidden rounded-2xl bg-white/80 dark:bg-slate-800/70 backdrop-blur border border-slate-200/80 dark:border-slate-700/70 shadow-sm hover:shadow-md transition-shadow">
                 {heroImage ? (
                   <CardHeader className="p-0">

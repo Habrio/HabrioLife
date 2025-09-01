@@ -302,3 +302,25 @@ export async function fetchLatestBlogs(limit = 6): Promise<Blog[]> {
   }
   return (data ?? []) as Blog[];
 }
+
+// Utility: pairs for static params or validation
+export async function fetchAllBlogCategorySlugPairs(): Promise<
+  { category: string; post: string }[]
+> {
+  // Fetch categories -> slug map
+  const { data: cats } = await supabase.from('categories').select('id, slug').eq('is_active', true);
+  const catMap = new Map<string, string>((cats ?? []).map((c: any) => [c.id as string, c.slug as string]));
+
+  // Fetch published blogs with category_id
+  const { data: blogs } = await supabase
+    .from('blogs')
+    .select('slug, category_id')
+    .eq('status', 'published');
+
+  const out: { category: string; post: string }[] = [];
+  for (const b of blogs ?? []) {
+    const cslug = catMap.get((b as any).category_id);
+    if (cslug) out.push({ category: cslug, post: (b as any).slug });
+  }
+  return out;
+}

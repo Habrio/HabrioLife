@@ -15,12 +15,13 @@ export const dynamic = 'force-dynamic';
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams?: Record<string, string | string[] | undefined>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const q = (searchParams?.q as string) ?? '';
-  const category = (searchParams?.category as string) ?? '';
-  const sub = (searchParams?.sub as string) ?? '';
-  const page = toInt(searchParams?.page, 1);
+  const sp = (await searchParams) ?? {};
+  const q = (sp.q as string) ?? '';
+  const category = (sp.category as string) ?? '';
+  const sub = (sp.sub as string) ?? '';
+  const page = toInt(sp.page, 1);
   const pageSize = 12;
 
   const { rows, total } = await searchBlogs({

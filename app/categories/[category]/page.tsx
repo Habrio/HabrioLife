@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import PageHeader from '@/src/components/kit/PageHeader';
 import Section from '@/src/components/kit/Section';
 import GuideGrid from '@/components/GuideGrid';
+import { fetchSubcategoriesByCategorySlug } from '@/src/lib/queries';
 import { fetchCategoryBySlug, fetchGuidesInCategory } from '@/src/lib/queries';
 
 export const dynamic = 'force-dynamic';
@@ -23,6 +24,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   // Filter guides belonging to this category slug
   const guidesForCategory = await fetchGuidesInCategory(categorySlug);
+  const subs = await fetchSubcategoriesByCategorySlug(categorySlug);
+  const subSlugById: Record<string, string> = Object.fromEntries(
+    subs.map((s: any) => [s.id as string, s.slug as string]),
+  );
 
   return (
     <ThemeProvider>
@@ -37,7 +42,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 No guides available in this category yet. Please check back soon!
               </p>
             ) : (
-              <GuideGrid guides={guidesForCategory as any} categorySlug={categorySlug} />
+              <GuideGrid guides={guidesForCategory as any} categorySlug={categorySlug} subSlugById={subSlugById} />
             )}
           </Section>
           <Newsletter />
