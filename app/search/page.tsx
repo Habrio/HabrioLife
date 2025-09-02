@@ -1,6 +1,3 @@
-import { ThemeProvider } from '@/components/ThemeProvider';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
 import Section from '@/components/kit/Section';
 import PageHeader from '@/components/kit/PageHeader';
 import { searchBlogs, fetchAllCategoriesMap, fetchAllSubcategoriesMap } from '@/lib/queries';
@@ -36,10 +33,8 @@ export default async function SearchPage({
   const pages = pageCount(total, pageSize);
 
   return (
-    <ThemeProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
-        <Navigation />
-        <main>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
+      <main>
           <Section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto mt-6">
             <PageHeader title="Search" description="Find guides by keywords, category, or subcategory." />
             <SearchForm initialQ={q} initialCategory={category} initialSub={sub} />
@@ -72,9 +67,7 @@ export default async function SearchPage({
               )}
             </section>
           </Section>
-        </main>
-        <Footer />
-      </div>
-    </ThemeProvider>
+      </main>
+    </div>
   );
 }

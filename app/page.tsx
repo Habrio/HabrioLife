@@ -1,7 +1,6 @@
 // Server Component: keeps UI the same, allows async children
 import Hero from '@/components/Hero';
 import Newsletter from '@/components/Newsletter';
-import PostsPreview from '@/components/PostsPreview';
 import HomeCategoriesServer from '@/components/HomeCategoriesServer';
 
 export default function Home() {
@@ -12,7 +11,6 @@ export default function Home() {
         <section className="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
           {/* Server-fetched categories from Supabase; UI unchanged */}
           <HomeCategoriesServer />
-          <PostsPreview />
         </section>
 
         <Newsletter />

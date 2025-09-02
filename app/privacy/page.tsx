@@ -1,15 +1,10 @@
-import { ThemeProvider } from '@/components/ThemeProvider';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
 import Section from '@/components/kit/Section';
 import PageHeader from '@/components/kit/PageHeader';
 
 export default function PrivacyPage() {
   return (
-    <ThemeProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
-        <Navigation />
-        <main>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
+      <main>
           <Section className="px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
             <PageHeader title="Privacy Policy" />
             <div className="prose prose-slate dark:prose-invert max-w-none">
@@ -22,10 +17,8 @@ export default function PrivacyPage() {
               <p>For questions, contact us at info@habrio.in.</p>
             </div>
           </Section>
-        </main>
-        <Footer />
-      </div>
-    </ThemeProvider>
+      </main>
+    </div>
   );
 }
 

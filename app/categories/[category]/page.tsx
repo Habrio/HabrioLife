@@ -1,6 +1,3 @@
-import { ThemeProvider } from '@/components/ThemeProvider';
-import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
 import Newsletter from '@/components/Newsletter';
 import { notFound } from 'next/navigation';
 import PageHeader from '@/components/kit/PageHeader';
@@ -30,10 +27,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   );
 
   return (
-    <ThemeProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
-        <Navigation />
-        <main>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 transition-all duration-500">
+      <main>
           <Section className="px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto mt-6">
             <PageHeader title={category.name} description={category.description ?? undefined} />
 
@@ -46,10 +41,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             )}
           </Section>
           <Newsletter />
-        </main>
-        <Footer />
-      </div>
-    </ThemeProvider>
+      </main>
+    </div>
   );
 }
 
