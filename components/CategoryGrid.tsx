@@ -3,12 +3,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useLanguage } from '@/src/i18n/LanguageProvider';
-import { getCategories } from '@/src/i18n/data-translations';
+import { useLanguage } from '@/i18n/LanguageProvider';
+import { getCategories } from '@/i18n/data-translations';
 import type { LucideIcon } from 'lucide-react';
 import { ShoppingBag, Home as HomeIcon, HeartPulse, Baby, Sofa, Wallet, ArrowRight } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { container, item, hover, spring } from '@/src/lib/motion';
+import { container, item, hover, spring } from '@/lib/motion';
 
 const iconMap: { [key: string]: LucideIcon } = {
   'daily-essentials': ShoppingBag,

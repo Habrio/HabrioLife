@@ -10,7 +10,7 @@ import {
   fetchLatestBlogs,
   fetchAllCategoriesMap,
   fetchAllSubcategoriesMap,
-} from '@/src/lib/queries';
+} from '@/lib/queries';
 
 type CatLite = { slug: string; name: string };
 

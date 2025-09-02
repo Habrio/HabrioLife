@@ -3,8 +3,8 @@
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import SearchBox from '@/components/SearchBox';
-import { useLanguage } from '@/src/i18n/LanguageProvider';
-import { t } from '@/src/i18n/dictionary';
+import { useLanguage } from '@/i18n/LanguageProvider';
+import { t } from '@/i18n/dictionary';
 
 const easingOut: [number, number, number, number] = [0.16, 1, 0.3, 1]; // ≈ easeOut
 const easingInOut: [number, number, number, number] = [0.42, 0, 0.58, 1]; // ≈ easeInOut

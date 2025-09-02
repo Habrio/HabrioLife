@@ -1,8 +1,8 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import Section from '@/src/components/kit/Section';
-import PageHeader from '@/src/components/kit/PageHeader';
+import Section from '@/components/kit/Section';
+import PageHeader from '@/components/kit/PageHeader';
 
 export default function TermsPage() {
   return (

@@ -1,8 +1,8 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/ThemeProvider';
-import Section from '@/src/components/kit/Section';
-import PageHeader from '@/src/components/kit/PageHeader';
+import Section from '@/components/kit/Section';
+import PageHeader from '@/components/kit/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 
 export default function AboutPage() {

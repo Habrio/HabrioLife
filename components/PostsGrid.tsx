@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { container, item, hover, spring } from '@/src/lib/motion';
-import { publicImageUrl } from '@/src/lib/supabase';
+import { container, item, hover, spring } from '@/lib/motion';
+import { publicImageUrl } from '@/lib/supabase';
 
 export type Guide = {
   id: string;

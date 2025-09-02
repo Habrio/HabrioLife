@@ -1,4 +1,4 @@
-import { fetchCategories } from '@/src/lib/queries';
+import { fetchCategories } from '@/lib/queries';
 
 export const dynamic = 'force-dynamic';
 

@@ -1,9 +1,9 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import Section from '@/src/components/kit/Section';
-import PageHeader from '@/src/components/kit/PageHeader';
-import { fetchCategoryBySlug, fetchSubcategoryBySlugs, fetchGuidesInSubcategory } from '@/src/lib/queries';
+import Section from '@/components/kit/Section';
+import PageHeader from '@/components/kit/PageHeader';
+import { fetchCategoryBySlug, fetchSubcategoryBySlugs, fetchGuidesInSubcategory } from '@/lib/queries';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -48,7 +48,7 @@ export default async function SubcategoryPage({ params }: { params: Promise<{ ca
 }
 
 export async function generateStaticParams() {
-  const { fetchCategories, fetchSubcategoriesByCategorySlug } = await import('@/src/lib/queries');
+  const { fetchCategories, fetchSubcategoriesByCategorySlug } = await import('@/lib/queries');
   const cats = await fetchCategories();
   const out: Array<{ category: string; sub: string }> = [];
   for (const c of cats as any[]) {

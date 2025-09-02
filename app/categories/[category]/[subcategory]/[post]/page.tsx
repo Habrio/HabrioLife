@@ -1,15 +1,15 @@
 import { ThemeProvider } from '@/components/ThemeProvider';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import Section from '@/src/components/kit/Section';
-import PageHeader from '@/src/components/kit/PageHeader';
+import Section from '@/components/kit/Section';
+import PageHeader from '@/components/kit/PageHeader';
 import { notFound } from 'next/navigation';
-import { fetchCategoryBySlug, fetchSubcategoryBySlugs, fetchOneBlog } from '@/src/lib/queries';
+import { fetchCategoryBySlug, fetchSubcategoryBySlugs, fetchOneBlog } from '@/lib/queries';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { mdxComponents } from '@/src/components/mdx-components';
-import { publicImageUrl } from '@/src/lib/supabase';
-import Tiers from '@/src/components/tiers';
-import { fetchBlocksForBlog, fetchBlockItemsGrouped, fetchDynamicTierItemsForSubcategory } from '@/src/lib/catalog-queries';
+import { mdxComponents } from '@/components/mdx-components';
+import { publicImageUrl } from '@/lib/supabase';
+import Tiers from '@/components/tiers';
+import { fetchBlocksForBlog, fetchBlockItemsGrouped, fetchDynamicTierItemsForSubcategory } from '@/lib/catalog-queries';
 
 export const dynamic = 'force-dynamic';
 

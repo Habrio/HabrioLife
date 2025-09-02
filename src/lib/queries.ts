@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { Category, Subcategory, Blog } from '@/src/types/content';
+import type { Category, Subcategory, Blog } from '@/types/content';
 
 export async function fetchCategories(): Promise<Category[]> {
   const { data, error } = await supabase

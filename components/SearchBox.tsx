@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Tag, BookOpen, Search as SearchIcon } from 'lucide-react';
-import { supabase } from '@/src/lib/supabase';
-import { fetchAllCategoriesMap, fetchAllSubcategoriesMap } from '@/src/lib/queries';
+import { supabase } from '@/lib/supabase';
+import { fetchAllCategoriesMap, fetchAllSubcategoriesMap } from '@/lib/queries';
 
 type SuggestionState = {
   cats: { name: string; slug: string }[];
