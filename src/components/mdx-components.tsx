@@ -1,5 +1,5 @@
 // MDX components can be rendered on the server, so no client directive is needed
-import { publicImageUrl } from '@/src/lib/supabase';
+import { publicImageUrl } from '@/lib/supabase';
 
 export const mdxComponents = {
   img: (props: any) => {

@@ -1,5 +1,5 @@
-import ItemCard from '@/src/components/item-card';
-import type { Item } from '@/src/types/catalog';
+import ItemCard from '@/components/item-card';
+import type { Item } from '@/types/catalog';
 
 function Tier({ title, items }: { title: string; items: Item[] }) {
   if (!items || items.length === 0) return null;

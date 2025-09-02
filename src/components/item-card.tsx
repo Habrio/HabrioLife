@@ -1,5 +1,5 @@
-import { publicImageUrl } from '@/src/lib/supabase';
-import type { Item } from '@/src/types/catalog';
+import { publicImageUrl } from '@/lib/supabase';
+import type { Item } from '@/types/catalog';
 
 export default function ItemCard({ item }: { item: Item }) {
   const src = item.image_path?.startsWith('http')

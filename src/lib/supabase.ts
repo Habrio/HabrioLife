@@ -8,7 +8,6 @@ if (typeof window === 'undefined') {
   const proxy = process.env.HTTPS_PROXY || process.env.HTTP_PROXY;
   if (proxy) {
     // Dynamically import to avoid bundling `undici` in client builds
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { ProxyAgent, setGlobalDispatcher } = eval('require')('undici');
     setGlobalDispatcher(new ProxyAgent(proxy));
   }

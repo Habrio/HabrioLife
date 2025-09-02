@@ -3,11 +3,11 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import Newsletter from '@/components/Newsletter';
 import { notFound } from 'next/navigation';
-import PageHeader from '@/src/components/kit/PageHeader';
-import Section from '@/src/components/kit/Section';
+import PageHeader from '@/components/kit/PageHeader';
+import Section from '@/components/kit/Section';
 import GuideGrid from '@/components/GuideGrid';
-import { fetchSubcategoriesByCategorySlug } from '@/src/lib/queries';
-import { fetchCategoryBySlug, fetchGuidesInCategory } from '@/src/lib/queries';
+import { fetchSubcategoriesByCategorySlug } from '@/lib/queries';
+import { fetchCategoryBySlug, fetchGuidesInCategory } from '@/lib/queries';
 
 export const dynamic = 'force-dynamic';
 
@@ -54,6 +54,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 }
 
 export async function generateStaticParams() {
-  const { getCategories } = await import('@/src/i18n/data-translations');
+  const { getCategories } = await import('@/i18n/data-translations');
   return getCategories('en').map((cat: any) => ({ category: cat.slug }));
 }

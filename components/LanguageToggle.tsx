@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage, type Lang } from '@/src/i18n/LanguageProvider';
+import { useLanguage, type Lang } from '@/i18n/LanguageProvider';
 
 export default function LanguageToggle() {
   const { lang, setLang } = useLanguage();

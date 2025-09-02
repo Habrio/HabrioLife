@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
-import { container, item, hover, spring } from '@/src/lib/motion';
+import { container, item, hover, spring } from '@/lib/motion';
 import { ArrowRight } from 'lucide-react';
-import { useLanguage } from '@/src/i18n/LanguageProvider';
-import { getGuides } from '@/src/i18n/data-translations';
-import { publicImageUrl } from '@/src/lib/supabase';
+import { useLanguage } from '@/i18n/LanguageProvider';
+import { getGuides } from '@/i18n/data-translations';
+import { publicImageUrl } from '@/lib/supabase';
 
 type Guide = {
   slug: string;

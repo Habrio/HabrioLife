@@ -1,8 +1,8 @@
 "use client";
 
-import PageHeader from '@/src/components/kit/PageHeader';
-import { useLanguage } from '@/src/i18n/LanguageProvider';
-import { getCategories } from '@/src/i18n/data-translations';
+import PageHeader from '@/components/kit/PageHeader';
+import { useLanguage } from '@/i18n/LanguageProvider';
+import { getCategories } from '@/i18n/data-translations';
 
 export default function CategoryHeader({ slug, fallbackName, fallbackDescription }: { slug: string; fallbackName: string; fallbackDescription?: string }) {
   const { lang } = useLanguage();

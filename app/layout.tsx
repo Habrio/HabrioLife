@@ -1,5 +1,5 @@
 import './globals.css';
-import { LanguageProvider } from '@/src/i18n/LanguageProvider';
+import { LanguageProvider } from '@/i18n/LanguageProvider';
 import type { Metadata } from 'next';
 import React from 'react';
 import Navigation from '@/components/Navigation';

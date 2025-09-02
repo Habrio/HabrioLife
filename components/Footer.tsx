@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ShoppingBag, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { fetchCategories } from '@/src/lib/queries';
+import { fetchCategories } from '@/lib/queries';
 
 export default function Footer() {
   const [categoryLinks, setCategoryLinks] = useState<{ label: string; href: string }[]>([]);

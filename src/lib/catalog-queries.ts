@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { Item, Block } from '@/src/types/catalog';
+import type { Item, Block } from '@/types/catalog';
 
 /** Supabase sometimes returns PostgREST errors when a table doesn't exist. Trap & return []/null. */
 function silent<T>(p: Promise<{ data: any; error: any }>, fallback: T): Promise<T> {

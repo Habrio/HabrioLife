@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { container, item, hover, spring } from '@/src/lib/motion';
+import { container, item, hover, spring } from '@/lib/motion';
 import { useEffect, useState } from 'react';
-import { publicImageUrl } from '@/src/lib/supabase';
-import { fetchLatestBlogs, fetchAllCategoriesMap, fetchAllSubcategoriesMap } from '@/src/lib/queries';
+import { publicImageUrl } from '@/lib/supabase';
+import { fetchLatestBlogs, fetchAllCategoriesMap, fetchAllSubcategoriesMap } from '@/lib/queries';
 
 type Row = {
   id: string;

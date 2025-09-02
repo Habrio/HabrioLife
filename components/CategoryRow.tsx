@@ -1,8 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import { useLanguage } from '@/src/i18n/LanguageProvider';
-import { getCategories } from '@/src/i18n/data-translations';
+import { useLanguage } from '@/i18n/LanguageProvider';
+import { getCategories } from '@/i18n/data-translations';
 import { Baby, HeartPulse, Home as HomeIcon, ShoppingBag, Sofa, Wallet } from 'lucide-react';
 
 const iconFor: Record<string, any> = {
