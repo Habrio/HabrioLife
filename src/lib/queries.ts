@@ -97,7 +97,9 @@ export async function fetchOneBlog(
 
   const { data, error } = await supabase
     .from('blogs')
-    .select('*')
+    .select(
+      'id,category_id,subcategory_id,title,slug,excerpt,cover_image_path,content_mdx,status,published_at',
+    )
     .eq('subcategory_id', sub[0].id)
     .eq('slug', blogSlug)
     .eq('status', 'published')
@@ -191,7 +193,9 @@ export async function fetchOneBlogByCategoryAndPost(
   if (!cat) return null;
   const { data, error } = await supabase
     .from('blogs')
-    .select('*')
+    .select(
+      'id,category_id,subcategory_id,title,slug,excerpt,cover_image_path,content_mdx,status,published_at',
+    )
     .eq('category_id', cat.id)
     .eq('slug', postSlug)
     .eq('status', 'published')

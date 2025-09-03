@@ -17,7 +17,9 @@ export const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_ANON);
 
 /** Build public URL for a Storage object path like 'assets/blogs/slug/cover.jpg' */
 export const publicImageUrl = (p?: string) =>
-  p ? `${env.SUPABASE_URL}/storage/v1/object/public/${p}` : '';
+  p
+    ? `${env.SUPABASE_URL}/storage/v1/object/public/${p.replace(/\.json$/, '')}`
+    : '';
 
 /**
  * Helper: suggested path for a blog cover stored in the public `assets` bucket
